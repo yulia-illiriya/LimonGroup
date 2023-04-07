@@ -33,8 +33,8 @@ INSTALLED_APPS = [
 
 
 
-    # apps
-    'accaunts',
+    # # apps
+    'accounts'
     'client',
     'employees',
     'factory',

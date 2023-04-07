@@ -7,7 +7,7 @@ class Order(models.Model):
     client = models.ForeignKey(
         Client,
         verbose_name='Клиент',
-        on_delete=models.)
+        on_delete=models.CASCADE)
     name_order = models.ForeignKey(
         ProductModel,
         verbose_name='Модель',
