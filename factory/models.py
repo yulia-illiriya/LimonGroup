@@ -1,6 +1,4 @@
 from django.db import models
-from employees import Employee
-from client import Client
 
 
 class Price(models.Model):
@@ -28,7 +26,7 @@ class Order(models.Model):
         verbose_name='Клиент',
         on_delete=models.CASCADE)
     name_order = models.ForeignKey(
-        ProductModel,
+        'SewingModel',
         verbose_name='Модель',
         on_delete=models.CASCADE)
     data_poluchenia = models.DateField(
