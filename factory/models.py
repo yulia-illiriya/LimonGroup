@@ -31,7 +31,10 @@ class Order(models.Model):
 
 
 class RawStuff(models.Model):
-    name = models.CharField(max_length=50, null=True, verbose_name='Наименование')
+    name = models.CharField(
+        max_length=50,
+        null=True,
+        verbose_name='Наименование')
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -43,17 +46,43 @@ class RawStuff(models.Model):
 
 
 class Storage(models.Model):
-    code = models.CharField(max_length=50, blank=True, null=True, verbose_name='Код')
+    code = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name='Код')
     product = models.ForeignKey(RawStuff, on_delete=models.SET_NULL)
-    color = models.CharField(max_length=50, blank=True, null=True, verbose_name='Цвет')
-    quantity = models.IntegerField(default=0, null=True, verbose_name='Количество')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, verbose_name='Сумма')
+    color = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name='Цвет')
+    quantity = models.IntegerField(
+        default=0, null=True, verbose_name='Количество')
+    total_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        null=True,
+        verbose_name='Сумма')
     data_purchase = models.DateField(verbose_name='Дата закупки')
     is_ready = models.BooleanField(default=True, verbose_name='')
-    remainder = models.CharField(max_length=10, blank=True, null=True, verbose_name='Остаток')
-    defect = models.IntegerField(default=0, blank=True, null=True, verbose_name='Брак')
+    remainder = models.CharField(
+        max_length=10,
+        blank=True,
+        null=True,
+        verbose_name='Остаток')
+    defect = models.IntegerField(
+        default=0,
+        blank=True,
+        null=True,
+        verbose_name='Брак')
     created_at = models.DateTimeField(verbose_name='')
-    where_was_purchase = models.TextField(max_length=100, blank=True, null=True, verbose_name='Поставщик')
+    where_was_purchase = models.TextField(
+        max_length=100,
+        blank=True,
+        null=True,
+        verbose_name='Поставщик')
 
     def __str__(self):
         return self.product
@@ -66,9 +95,14 @@ class Storage(models.Model):
 class SewingModel(models.Model):
     client = models.CharField(max_length=50, verbose_name='Клиент')
     color = models.CharField(max_length=50, verbose_name='Цвет')
-    material = models.CharField(max_length=50, verbose_name='Материал', blank=True, null=True)
+    material = models.CharField(
+        max_length=50,
+        verbose_name='Материал',
+        blank=True,
+        null=True)
     type = models.CharField(max_length=50, verbose_name='Тип модели')
-    price_for_one = models.DecimalField(max_length=10, verbose_name='Цена за штуку')
+    price_for_one = models.DecimalField(
+        max_length=10, verbose_name='Цена за штуку')
 
     def __str__(self):
         return self.client
@@ -91,6 +125,3 @@ class FabricCutting(models.Model):
     class Meta:
         verbose_name = 'Раскрой ткани'
         verbose_name_plural = 'Раскрой ткани'
-
-
-
