@@ -1,5 +1,5 @@
 from django.db import models
-
+from client.models import Client
 
 class Price(models.Model):
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
@@ -26,7 +26,7 @@ class Order(models.Model):
         verbose_name='Клиент',
         on_delete=models.CASCADE)
     name_order = models.ForeignKey(
-        ProductModel,
+        'SewingModel',
         verbose_name='Модель',
         on_delete=models.CASCADE)
     data_poluchenia = models.DateField(
