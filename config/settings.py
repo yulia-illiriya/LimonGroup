@@ -43,19 +43,6 @@ INSTALLED_APPS = [
     'accounts',   
     
 
-    # Packages
-    'rest_framework',
-    'drf_yasg',
-
-
-
-    # # apps
-    'accounts'
-    'client',
-    'employees',
-    'factory',
-
-
 ]
 
 MIDDLEWARE = [
