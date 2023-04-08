@@ -1,6 +1,7 @@
 from django.db import models
 from client.models import Client
 
+
 class Price(models.Model):
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
     updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
@@ -8,10 +9,10 @@ class Price(models.Model):
     end_date = models.DateTimeField("Цена действительна до")
     is_actual = models.BooleanField("Актуально?", default=True)
     value = models.DecimalField("Стоимость")
-    
-    def __str__(self): 
+
+    def __str__(self):
         return self.value
-    
+
     class Meta:
         verbose_name = "Стоимость пошива"
         verbose_name = "Цены"
@@ -35,9 +36,19 @@ class Order(models.Model):
         default=0, verbose_name='Количество Заявленное')
     quantity_fact = models.IntegerField(
         default=0, verbose_name='Количество Фактически выполненного')
-    data_zakup = models.DateField(auto_now=True, verbose_name='Дата закупа')
-    raskroi_tkani = models.DateField(verbose_name='Дата когда раскроили')
-    pod_flizelin = models.DateField(verbose_name='Дата подклейки флизелина')
+    data_zakup = models.DateField(
+        auto_now=True,
+        verbose_name='Дата закупа',
+        blank=True,
+        null=True)
+    raskroi_tkani = models.DateField(
+        verbose_name='Дата когда раскроили',
+        blank=True,
+        null=True)
+    pod_flizelin = models.DateField(
+        verbose_name='Дата подклейки флизелина',
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = 'Заказ'
@@ -47,11 +58,13 @@ class Order(models.Model):
         return f'Имя клиента {self.client}. Имя продутка {self.name_order}.'
 
 
-
 class DailyWork(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
-    product = models.ForeignKey('SewingModel', on_delete=models.CASCADE, verbose_name="Модель")  # модель
+    product = models.ForeignKey(
+        'SewingModel',
+        on_delete=models.CASCADE,
+        verbose_name="Модель")  # модель
     quantity = models.PositiveIntegerField(verbose_name="Количество")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
@@ -65,13 +78,20 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
-    product = models.ForeignKey('SewingModel', on_delete=models.CASCADE, verbose_name="Модель")
+    product = models.ForeignKey(
+        'SewingModel',
+        on_delete=models.CASCADE,
+        verbose_name="Модель")
     price = models.PositiveIntegerField()
     color = models.CharField(max_length=25)
     image = models.ImageField(null=True, blank=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name="Клиент")
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        verbose_name="Клиент")
     received_date = models.DateField(verbose_name="Дата получения")
     delivery_date = models.DateField(verbose_name="Дата отправки")
+
 
 class RawStuff(models.Model):
     name = models.CharField(
@@ -127,7 +147,6 @@ class Storage(models.Model):
         null=True,
         verbose_name='Поставщик')
 
-
     def __str__(self):
         return self.product
 
@@ -173,5 +192,3 @@ class FabricCutting(models.Model):
     class Meta:
         verbose_name = 'Раскрой ткани'
         verbose_name_plural = 'Раскрой ткани'
-
-
