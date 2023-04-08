@@ -6,7 +6,7 @@ class Price(models.Model):
     start_date = models.DateTimeField("Цена действительна с")
     end_date = models.DateTimeField("Цена действительна до")
     is_actual = models.BooleanField("Актуально?", default=True)
-    value = models.PositiveIntegerField("Стоимость")
+    value = models.DecimalField("Стоимость")
     
     def __str__(self): 
         return self.value
