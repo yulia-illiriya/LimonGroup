@@ -1,5 +1,5 @@
 from django.db import models
-
+from client.models import Client
 
 class Price(models.Model):
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
@@ -51,7 +51,7 @@ class Order(models.Model):
 class DailyWork(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Модель")  # модель
+    product = models.ForeignKey('SewingModel', on_delete=models.CASCADE, verbose_name="Модель")  # модель
     quantity = models.PositiveIntegerField(verbose_name="Количество")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
@@ -65,7 +65,7 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Модель")
+    product = models.ForeignKey('SewingModel', on_delete=models.CASCADE, verbose_name="Модель")
     price = models.PositiveIntegerField()
     color = models.CharField(max_length=25)
     image = models.ImageField(null=True, blank=True)
