@@ -28,3 +28,6 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f'Имя клиента {self.client}. Имя продутка {self.name_order}.'
+    
+
+    
