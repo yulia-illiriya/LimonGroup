@@ -1,5 +1,6 @@
 from django.db import models
 from client.models import Client
+from employees.models import Employee
 
 
 class Price(models.Model):
