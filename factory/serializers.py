@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Order, SewingModel
+from .models import Order, SewingModel, Price
+
+
+class PriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Price
+        fields = "__all__"
 
 
 class SewingModelSerializer(serializers.ModelSerializer):
