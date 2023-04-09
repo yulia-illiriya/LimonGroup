@@ -1,10 +1,12 @@
 from rest_framework import generics
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
-                          DailyWorkSerializer)
+                          DailyWorkSerializer,
+                          NewOrderSerializer)
 from .models import (Order,
                      SewingModel,
-                     DailyWork)
+                     DailyWork,
+                     NewOrder)
 
 
 class SewingModelListAPIView(generics.ListAPIView):
@@ -58,3 +60,18 @@ class DailyWorkCreateAPIView(generics.CreateAPIView):
 class DailyWorkDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
+
+
+class NewOrderListAPIView(generics.ListAPIView):
+    queryset = NewOrder.objects.all()
+    serializer_class = NewOrderSerializer
+
+
+class NewOrderCreateAPIView(generics.CreateAPIView):
+    queryset = NewOrder.objects.all()
+    serializer_class = NewOrderSerializer
+
+
+class NewOrderDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NewOrder.objects.all()
+    serializer_class = NewOrderSerializer

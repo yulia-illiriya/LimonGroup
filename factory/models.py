@@ -102,15 +102,22 @@ class DailyWork(models.Model):
 
 class NewOrder(models.Model):
     product = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель")
-    price = models.PositiveIntegerField()
-    color = models.CharField(max_length=25)
-    image = models.ImageField(null=True, blank=True)
+    price = models.PositiveIntegerField(verbose_name="Стоимость")
+    color = models.CharField(max_length=25, verbose_name="Цвет")
+    image = models.ImageField(null=True, blank=True, verbose_name="Изображение")
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
         verbose_name="Клиент")
     received_date = models.DateField(verbose_name="Дата получения")
     delivery_date = models.DateField(verbose_name="Дата отправки")
+
+    def __str__(self):
+        return self.product
+
+    class Meta:
+        verbose_name = "Образец"
+        verbose_name_plural = "Образцы"
 
 
 class RawStuff(models.Model):
@@ -191,5 +198,3 @@ class FabricCutting(models.Model):
     class Meta:
         verbose_name = 'Раскрой ткани'
         verbose_name_plural = 'Раскрой ткани'
-
-
