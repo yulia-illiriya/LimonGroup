@@ -82,7 +82,7 @@ class DailyWork(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
     product = models.ForeignKey(
-        'SewingModel',
+        SewingModel,
         on_delete=models.CASCADE,
         verbose_name="Модель")  # модель
     quantity = models.PositiveIntegerField(verbose_name="Количество")
