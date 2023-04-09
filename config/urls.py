@@ -29,7 +29,7 @@ urlpatterns = [
     path('factory/', include("factory.urls")),
 
 
-    # auth
+    # # auth
     path('api-auth/', include('rest_framework.urls')),
 ]
 
