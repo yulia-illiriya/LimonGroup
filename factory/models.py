@@ -47,7 +47,7 @@ class Order(models.Model):
         verbose_name='Клиент',
         on_delete=models.CASCADE)
     name_order = models.ForeignKey(
-        'SewingModel',
+        SewingModel,
         verbose_name='Модель',
         on_delete=models.CASCADE)
     data_poluchenia = models.DateField(
@@ -99,7 +99,7 @@ class DailyWork(models.Model):
 
 class NewOrder(models.Model):
     product = models.ForeignKey(
-        'SewingModel',
+        SewingModel,
         on_delete=models.CASCADE,
         verbose_name="Модель")
     price = models.PositiveIntegerField()
