@@ -16,8 +16,9 @@ class Price(models.Model):
 
     class Meta:
         verbose_name = "Стоимость пошива"
-        verbose_name = "Цены"
+        # verbose_name = "Цены"
         ordering = ['updated_at']
+
 
 # Create your models here.
 
@@ -35,7 +36,7 @@ class SewingModel(models.Model):
         max_digits=10, decimal_places=2, verbose_name='Цена за штуку')
 
     def __str__(self):
-        return self.client
+        return self.type
 
     class Meta:
         verbose_name = 'Модель'
@@ -86,6 +87,7 @@ class DailyWork(models.Model):
         SewingModel,
         on_delete=models.CASCADE,
         verbose_name="Модель")  # модель
+    payment_per_day = models.IntegerField(default=0, verbose_name="Зарплата за день")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
@@ -99,19 +101,23 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
-    product = models.ForeignKey(
-        SewingModel,
-        on_delete=models.CASCADE,
-        verbose_name="Модель")
-    price = models.PositiveIntegerField()
-    color = models.CharField(max_length=25)
-    image = models.ImageField(null=True, blank=True)
+    product = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель")
+    price = models.PositiveIntegerField(verbose_name="Стоимость")
+    color = models.CharField(max_length=25, verbose_name="Цвет")
+    image = models.ImageField(null=True, blank=True, verbose_name="Изображение")
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
         verbose_name="Клиент")
     received_date = models.DateField(verbose_name="Дата получения")
     delivery_date = models.DateField(verbose_name="Дата отправки")
+
+    def __str__(self):
+        return self.product
+
+    class Meta:
+        verbose_name = "Образец"
+        verbose_name_plural = "Образцы"
 
 
 class RawStuff(models.Model):
@@ -176,10 +182,9 @@ class Storage(models.Model):
         return self.product
 
     class Meta:
-
-        verbose_name = "Образец"
-        verbose_name_plural = "Образцы"
-
+        # verbose_name = "Образец"
+        # verbose_name_plural = "Образцы"
+        #
         verbose_name = 'Склад-Сырье'
         verbose_name_plural = 'Склад-Сырье'
 

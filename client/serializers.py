@@ -1,14 +1,12 @@
 from rest_framework import serializers
-
+from .models import CatalogCategory, Catalog
 from client.models import Client
+
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = "__all__"
-
-
-from .models import CatalogCategory, Catalog
 
 
 class CatalogCategorySerializer(serializers.ModelSerializer):
