@@ -1,3 +1,10 @@
+
+from django.shortcuts import render
+
+from .serializers import OrderSerializer, SewingModelSerializer, PriceSerializer
+from .models import Order, SewingModel, Price
+
+
 from rest_framework import generics
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
@@ -7,6 +14,38 @@ from .models import (Order,
                      SewingModel,
                      DailyWork,
                      NewOrder)
+
+
+class PriceListAPIView(generics.ListAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializer
+
+
+price_list = PriceListAPIView.as_view()
+
+
+class PriceCreateAPIView(generics.CreateAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializer
+
+
+price_create = PriceCreateAPIView.as_view()
+
+
+class PriceUpdateAPIView(generics.UpdateAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializer
+
+
+price_update = PriceUpdateAPIView.as_view()
+
+
+class PriceDestroyAPIView(generics.DestroyAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializer
+
+
+price_destroy = PriceDestroyAPIView.as_view()
 
 
 class SewingModelListAPIView(generics.ListAPIView):

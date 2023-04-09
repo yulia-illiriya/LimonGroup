@@ -141,7 +141,11 @@ class Storage(models.Model):
         blank=True,
         null=True,
         verbose_name='Код')
-    product = models.ForeignKey(RawStuff, null=True, on_delete=models.SET_NULL, verbose_name="Сырье")
+    product = models.ForeignKey(
+        RawStuff,
+        null=True,
+        on_delete=models.SET_NULL,
+        verbose_name="Сырье")
     color = models.CharField(
         max_length=50,
         blank=True,
@@ -187,7 +191,10 @@ class Storage(models.Model):
 
 class FabricCutting(models.Model):
     material = models.ForeignKey(Storage, null=True, on_delete=models.SET_NULL)
-    model_id = models.ForeignKey(SewingModel, null=True, on_delete=models.SET_NULL)
+    model_id = models.ForeignKey(
+        SewingModel,
+        null=True,
+        on_delete=models.SET_NULL)
     quantity_model_total = models.IntegerField(default=0, null=True)
     data_start_day = models.DateField(verbose_name='Дата начала')
     data_start_end = models.DateField(verbose_name='Дата окончания')
