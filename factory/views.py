@@ -1,19 +1,16 @@
-
-from django.shortcuts import render
-
-from .serializers import OrderSerializer, SewingModelSerializer, PriceSerializer
-from .models import Order, SewingModel, Price
-
-
 from rest_framework import generics
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
-                          NewOrderSerializer)
-from .models import (Order,
-                     SewingModel,
-                     DailyWork,
-                     NewOrder)
+                          NewOrderSerializer, PriceSerializer)
+from .models import (Order, SewingModel, DailyWork,
+                     NewOrder, Price)
+
+
+
+
+
+
 
 
 class PriceListAPIView(generics.ListAPIView):
