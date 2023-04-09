@@ -13,7 +13,7 @@ urlpatterns = [
     path('details-dailywork/', views.DailyWorkDetailsAPIView.as_view(), name='details-dailywork'),
     path('list-neworder/', views.NewOrderListAPIView.as_view(), name='list-neworder'),
     path('create-neworder/', views.NewOrderCreateAPIView.as_view(), name='create-neworder'),
-    path('details-neworder/', views.NewOrderDetailsAPIView.as_view(), name='details-neworder')
+    path('details-neworder/', views.NewOrderDetailsAPIView.as_view(), name='details-neworder'),
 
     # SewingModel
     path('Sewmodel-create/', views.sewingModel_create, name='Sewmodel-create'),
