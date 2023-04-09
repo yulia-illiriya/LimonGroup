@@ -21,6 +21,26 @@ class Price(models.Model):
 # Create your models here.
 
 
+class SewingModel(models.Model):
+    client = models.CharField(max_length=50, verbose_name='Клиент')
+    color = models.CharField(max_length=50, verbose_name='Цвет')
+    material = models.CharField(
+        max_length=50,
+        verbose_name='Материал',
+        blank=True,
+        null=True)
+    type = models.CharField(max_length=50, verbose_name='Тип модели')
+    price_for_one = models.DecimalField(
+        max_length=10, verbose_name='Цена за штуку')
+
+    def __str__(self):
+        return self.client
+
+    class Meta:
+        verbose_name = 'Модель'
+        verbose_name_plural = 'Модель'
+
+
 class Order(models.Model):
     client = models.ForeignKey(
         Client,
@@ -157,26 +177,6 @@ class Storage(models.Model):
 
         verbose_name = 'Склад-Сырье'
         verbose_name_plural = 'Склад-Сырье'
-
-
-class SewingModel(models.Model):
-    client = models.CharField(max_length=50, verbose_name='Клиент')
-    color = models.CharField(max_length=50, verbose_name='Цвет')
-    material = models.CharField(
-        max_length=50,
-        verbose_name='Материал',
-        blank=True,
-        null=True)
-    type = models.CharField(max_length=50, verbose_name='Тип модели')
-    price_for_one = models.DecimalField(
-        max_length=10, verbose_name='Цена за штуку')
-
-    def __str__(self):
-        return self.client
-
-    class Meta:
-        verbose_name = 'Модель'
-        verbose_name_plural = 'Модель'
 
 
 class FabricCutting(models.Model):
