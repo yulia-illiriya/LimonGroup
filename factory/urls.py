@@ -31,7 +31,7 @@ urlpatterns = [
 
     # SewingModel
     path(
-        'Sewmodel-create/',
+        'Sewmodel-list-create/',
         views.sewingModel_list_create,
         name='Sewmodel-list-create'),
     path(
