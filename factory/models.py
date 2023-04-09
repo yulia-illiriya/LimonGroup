@@ -87,7 +87,8 @@ class DailyWork(models.Model):
         SewingModel,
         on_delete=models.CASCADE,
         verbose_name="Модель")  # модель
-    payment_per_day = models.IntegerField(default=0, verbose_name="Зарплата за день")
+    payment_per_day = models.IntegerField(
+        default=0, verbose_name="Зарплата за день")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
@@ -101,10 +102,16 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
-    product = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель")
+    product = models.ForeignKey(
+        SewingModel,
+        on_delete=models.CASCADE,
+        verbose_name="Модель")
     price = models.PositiveIntegerField(verbose_name="Стоимость")
     color = models.CharField(max_length=25, verbose_name="Цвет")
-    image = models.ImageField(null=True, blank=True, verbose_name="Изображение")
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        verbose_name="Изображение")
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
