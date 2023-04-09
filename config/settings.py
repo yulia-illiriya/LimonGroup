@@ -31,16 +31,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    #apps
+    'accounts', 
+    'factory',
+    'employees.apps.EmployeesConfig',
+    'client',
     
     #rest
     'rest_framework',
-    'drf_yasg',
-    
-    #apps
-    'factory',
-    'employees',
-    'client',
-    'accounts',   
+    'drf_yasg',      
     
 
 ]
@@ -134,6 +134,9 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+        'rest_framework.permissions.AllowAny'
+    ],
+    'DATETIME_FORMAT': '%d.%m.%Y %H:%M:%S',
+    'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
+    'DATE_FORMAT': '%d.%m.%Y',
 }
