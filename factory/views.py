@@ -16,20 +16,12 @@ from .models import (Order,
                      NewOrder)
 
 
-class PriceListAPIView(generics.ListAPIView):
+class PriceListCreateAPIView(generics.ListCreateAPIView):
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
 
 
-price_list = PriceListAPIView.as_view()
-
-
-class PriceCreateAPIView(generics.CreateAPIView):
-    queryset = Price.objects.all()
-    serializer_class = PriceSerializer
-
-
-price_create = PriceCreateAPIView.as_view()
+price_list_create = PriceListCreateAPIView.as_view()
 
 
 class PriceUpdateAPIView(generics.UpdateAPIView):
@@ -37,53 +29,24 @@ class PriceUpdateAPIView(generics.UpdateAPIView):
     serializer_class = PriceSerializer
 
 
-price_update = PriceUpdateAPIView.as_view()
+price_details = PriceUpdateAPIView.as_view()
 
 
-class PriceDestroyAPIView(generics.DestroyAPIView):
-    queryset = Price.objects.all()
-    serializer_class = PriceSerializer
-
-
-price_destroy = PriceDestroyAPIView.as_view()
-
-
-class SewingModelListAPIView(generics.ListAPIView):
+class SewingModelListCreateAPIView(generics.ListCreateAPIView):
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
 
 
-sewingModel_list = SewingModelListAPIView.as_view()
+sewingModel_list_create = SewingModelListCreateAPIView.as_view()
 
 
-class SewingModelCreateAPIView(generics.CreateAPIView):
+class SewingModelRetrieveUpdateDestroyAPIView(
+        generics.RetrieveUpdateDestroyAPIView):
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
 
 
-sewingModel_create = SewingModelCreateAPIView.as_view()
-
-
-class SewingModelUpdateAPIView(generics.UpdateAPIView):
-    queryset = SewingModel.objects.all()
-    serializer_class = SewingModelSerializer
-
-
-sewingModel_update = SewingModelUpdateAPIView.as_view()
-
-
-class SewingModelDestroyAPIView(generics.DestroyAPIView):
-    queryset = SewingModel.objects.all()
-    serializer_class = SewingModelSerializer
-
-
-sewingModel_destroy = SewingModelDestroyAPIView.as_view()
-
-
-class OrderListView(generics.ListAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = None
+sewingModel_details = SewingModelRetrieveUpdateDestroyAPIView.as_view()
 
 
 class DailyWorkListAPIView(generics.ListAPIView):
