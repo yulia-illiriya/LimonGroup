@@ -19,7 +19,7 @@ class Client(models.Model):
 
 class CatalogCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name='Каталог Категория:')
-    slug = models.SlugField(max_length=100, verbose_name='Ссылка:')
+    slug = models.SlugField(max_length=100, verbose_name='Ссылка:', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Категория Каталога'
@@ -30,9 +30,21 @@ class CatalogCategory(models.Model):
 
 
 class Catalog(models.Model):
+    S = "S"
+    M = "M"
+    L = "L"
+    XL = "XL"
+    MODEL_SIZE_CHOICES = [
+        (S, "S"),
+        (M, "M"),
+        (L, "L"),
+        (XL, "XL"),
+        
+        ]
+    
     articul = models.CharField(max_length=200, verbose_name='Артикуль:')
     colors = models.CharField(max_length=100, verbose_name='Цвет:')
-    size = models.IntegerField(default=0, verbose_name='Размер:')
+    size = models.CharField(verbose_name='Размер:', max_length=4, choices=MODEL_SIZE_CHOICES)
     image = models.ImageField(
         upload_to='media/%Y/%m/%d',
         verbose_name='Изображение:')

@@ -1,7 +1,16 @@
 from rest_framework import serializers
+
 from .models import (Order,
                      NewOrder,
                      DailyWork)
+
+from .models import Order, SewingModel
+
+
+class SewingModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SewingModel
+        fieds = "__all__"
 
 
 class OrderSerializer(serializers.ModelSerializer):

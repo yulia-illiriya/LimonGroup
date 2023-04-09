@@ -1,6 +1,6 @@
 from django.db import models
-# from employees import Employee
 from client.models import Client
+from employees.models import Employee
 
 
 class SewingModel(models.Model):
@@ -58,9 +58,19 @@ class Order(models.Model):
         default=0, verbose_name='Количество Заявленное')
     quantity_fact = models.IntegerField(
         default=0, verbose_name='Количество Фактически выполненного')
-    data_zakup = models.DateField(auto_now=True, verbose_name='Дата закупа')
-    raskroi_tkani = models.DateField(verbose_name='Дата когда раскроили')
-    pod_flizelin = models.DateField(verbose_name='Дата подклейки флизелина')
+    data_zakup = models.DateField(
+        auto_now=True,
+        verbose_name='Дата закупа',
+        blank=True,
+        null=True)
+    raskroi_tkani = models.DateField(
+        verbose_name='Дата когда раскроили',
+        blank=True,
+        null=True)
+    pod_flizelin = models.DateField(
+        verbose_name='Дата подклейки флизелина',
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = 'Заказ'
@@ -73,7 +83,13 @@ class Order(models.Model):
 class DailyWork(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
+
     model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель")  # модель
+
+    product = models.ForeignKey(
+        SewingModel,
+        on_delete=models.CASCADE,
+        verbose_name="Модель")  # модель
     quantity = models.PositiveIntegerField(verbose_name="Количество")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
@@ -91,7 +107,10 @@ class NewOrder(models.Model):
     price = models.PositiveIntegerField()
     color = models.CharField(max_length=25)
     image = models.ImageField(null=True, blank=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name="Клиент")
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        verbose_name="Клиент")
     received_date = models.DateField(verbose_name="Дата получения")
     delivery_date = models.DateField(verbose_name="Дата отправки")
 
