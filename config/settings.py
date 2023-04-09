@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
     # rest
     'rest_framework',
-    # 'drf_yasg',
+    'drf_yasg',
 
     # apps
     'factory',

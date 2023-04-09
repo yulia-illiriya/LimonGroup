@@ -3,8 +3,6 @@ from client.models import Client
 from employees.models import Employee
 
 
-<<<<<<< HEAD
-=======
 class Price(models.Model):
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
     updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
@@ -18,13 +16,13 @@ class Price(models.Model):
 
     class Meta:
         verbose_name = "Стоимость пошива"
-        verbose_name = "Цены"
+        # verbose_name = "Цены"
         ordering = ['updated_at']
+
 
 # Create your models here.
 
 
->>>>>>> 5bea44272223611e72a239f4bb7cb96e11acb03e
 class SewingModel(models.Model):
     client = models.CharField(max_length=50, verbose_name='Клиент')
     color = models.CharField(max_length=50, verbose_name='Цвет')
@@ -38,31 +36,11 @@ class SewingModel(models.Model):
         max_digits=10, decimal_places=2, verbose_name='Цена за штуку')
 
     def __str__(self):
-        return self.client
+        return self.type
 
     class Meta:
         verbose_name = 'Модель'
         verbose_name_plural = 'Модель'
-
-
-class Price(models.Model):
-    created_at = models.DateTimeField("Запись создана", auto_now_add=True)
-    updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
-    start_date = models.DateTimeField("Цена действительна с")
-    end_date = models.DateTimeField("Цена действительна до")
-    is_actual = models.BooleanField("Актуально?", default=True)
-    value = models.DecimalField("Стоимость")
-
-    def __str__(self):
-        return self.value
-
-    class Meta:
-        verbose_name = "Стоимость пошива"
-        verbose_name = "Цены"
-        ordering = ['updated_at']
-
-
-# Create your models here.
 
 
 class Order(models.Model):
@@ -105,13 +83,11 @@ class Order(models.Model):
 class DailyWork(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
-
-    model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель")  # модель
-
     product = models.ForeignKey(
         SewingModel,
         on_delete=models.CASCADE,
         verbose_name="Модель")  # модель
+    payment_per_day = models.IntegerField(default=0, verbose_name="Зарплата за день")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
@@ -215,3 +191,5 @@ class FabricCutting(models.Model):
     class Meta:
         verbose_name = 'Раскрой ткани'
         verbose_name_plural = 'Раскрой ткани'
+
+

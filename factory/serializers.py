@@ -1,16 +1,17 @@
 from rest_framework import serializers
 
-from .models import (Order,
-                     NewOrder,
-                     DailyWork)
-
-from .models import Order, SewingModel
+from .models import (
+    Order,
+    NewOrder,
+    DailyWork,
+    SewingModel
+)
 
 
 class SewingModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SewingModel
-        fieds = "__all__"
+        fields = "__all__"
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -20,6 +21,14 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class NewOrderSerializer(serializers.ModelSerializer):
+    product = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = NewOrder
+        fields = '__all__'
+
+
+class DailyWorkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyWork
         fields = '__all__'

@@ -1,9 +1,10 @@
-from django.shortcuts import render
-
-from .serializers import OrderSerializer, SewingModelSerializer
-from .models import Order, SewingModel
-
 from rest_framework import generics
+from .serializers import (OrderSerializer,
+                          SewingModelSerializer,
+                          DailyWorkSerializer)
+from .models import (Order,
+                     SewingModel,
+                     DailyWork)
 
 
 class SewingModelListAPIView(generics.ListAPIView):
@@ -42,3 +43,18 @@ class OrderListView(generics.ListAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = None
+
+
+class DailyWorkListAPIView(generics.ListAPIView):
+    queryset = DailyWork.objects.all()
+    serializer_class = DailyWorkSerializer
+
+
+class DailyWorkCreateAPIView(generics.CreateAPIView):
+    queryset = DailyWork.objects.all()
+    serializer_class = DailyWorkSerializer
+
+
+class DailyWorkDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = DailyWork.objects.all()
+    serializer_class = DailyWorkSerializer
