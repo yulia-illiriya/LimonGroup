@@ -3,6 +3,28 @@ from client.models import Client
 from employees.models import Employee
 
 
+<<<<<<< HEAD
+=======
+class Price(models.Model):
+    created_at = models.DateTimeField("Запись создана", auto_now_add=True)
+    updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
+    start_date = models.DateTimeField("Цена действительна с")
+    end_date = models.DateTimeField("Цена действительна до")
+    is_actual = models.BooleanField("Актуально?", default=True)
+    value = models.DecimalField("Стоимость", max_digits=7, decimal_places=2)
+
+    def __str__(self):
+        return self.value
+
+    class Meta:
+        verbose_name = "Стоимость пошива"
+        verbose_name = "Цены"
+        ordering = ['updated_at']
+
+# Create your models here.
+
+
+>>>>>>> 5bea44272223611e72a239f4bb7cb96e11acb03e
 class SewingModel(models.Model):
     client = models.CharField(max_length=50, verbose_name='Клиент')
     color = models.CharField(max_length=50, verbose_name='Цвет')
@@ -13,7 +35,7 @@ class SewingModel(models.Model):
         null=True)
     type = models.CharField(max_length=50, verbose_name='Тип модели')
     price_for_one = models.DecimalField(
-        max_length=10, verbose_name='Цена за штуку')
+        max_digits=10, decimal_places=2, verbose_name='Цена за штуку')
 
     def __str__(self):
         return self.client
@@ -136,7 +158,7 @@ class Storage(models.Model):
         blank=True,
         null=True,
         verbose_name='Код')
-    product = models.ForeignKey(RawStuff, on_delete=models.SET_NULL)
+    product = models.ForeignKey(RawStuff, null=True, on_delete=models.SET_NULL, verbose_name="Сырье")
     color = models.CharField(
         max_length=50,
         blank=True,
@@ -151,7 +173,7 @@ class Storage(models.Model):
         null=True,
         verbose_name='Сумма')
     data_purchase = models.DateField(verbose_name='Дата закупки')
-    is_ready = models.BooleanField(default=True, verbose_name='')
+    is_ready = models.BooleanField(default=True, verbose_name='Готово')
     remainder = models.CharField(
         max_length=10,
         blank=True,
@@ -181,8 +203,8 @@ class Storage(models.Model):
 
 
 class FabricCutting(models.Model):
-    material = models.ForeignKey(Storage, on_delete=models.SET_NULL)
-    model_id = models.ForeignKey(SewingModel, on_delete=models.SET_NULL)
+    material = models.ForeignKey(Storage, null=True, on_delete=models.SET_NULL)
+    model_id = models.ForeignKey(SewingModel, null=True, on_delete=models.SET_NULL)
     quantity_model_total = models.IntegerField(default=0, null=True)
     data_start_day = models.DateField(verbose_name='Дата начала')
     data_start_end = models.DateField(verbose_name='Дата окончания')
