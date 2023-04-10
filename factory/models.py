@@ -4,6 +4,7 @@ from employees.models import Employee
 
 
 class Price(models.Model):
+    objects = None
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
     updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
     start_date = models.DateTimeField("Цена действительна с")
