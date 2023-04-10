@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from client.models import Client
 
 
 from .models import (
@@ -19,6 +20,8 @@ class PriceSerializer(serializers.ModelSerializer):
 
 
 class SewingModelSerializer(serializers.ModelSerializer):
+    client = serializers.SlugRelatedField(slug_field='full_name', queryset=Client.objects.all())
+    
     class Meta:
         model = SewingModel
         fields = "__all__"

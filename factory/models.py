@@ -24,7 +24,7 @@ class Price(models.Model):
 
 
 class SewingModel(models.Model):
-    client = models.CharField(max_length=50, verbose_name='Клиент')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="model", verbose_name='Клиент')
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,
