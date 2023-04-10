@@ -102,3 +102,4 @@ class RawStuffRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = StorageSerializer
+
