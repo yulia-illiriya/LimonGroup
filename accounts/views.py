@@ -10,6 +10,7 @@ from drf_yasg.utils import swagger_auto_schema
 from accounts.models import User
 from accounts.serializers import UserSerializer
 
+
 @method_decorator(name='list', decorator=swagger_auto_schema(tags=['users']))
 @method_decorator(name='retrieve', decorator=swagger_auto_schema(tags=['users']))
 @method_decorator(name='create', decorator=swagger_auto_schema(tags=['users']))

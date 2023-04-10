@@ -9,25 +9,25 @@ urlpatterns = [
         views.DailyWorkListCreateAPIView.as_view(),
         name='list-dailywork'),
     path(
-        'update-dailywork/',
+        'update-dailywork/<int:pk>',
         views.DailyWorkRetrieveUpdateAPIView.as_view(),
         name='create-dailywork'),
     path(
         'destroy-dailywork/<int:pk>/',
         views.DailyWorkRetrieveDestroyAPIView.as_view(),
-        name='details-dailywork'),
+        name='destroy-dailywork'),
     path(
         'listcreate-neworder/',
         views.NewOrderListAPIView.as_view(),
         name='list-neworder'),
     path(
-        'update-neworder/',
+        'update-neworder/<int:pk>',
         views.NewOrderRetrieveUpdateAPIView.as_view(),
-        name='create-neworder'),
+        name='update-neworder'),
     path(
         'destroy-neworder/<int:pk>/',
         views.NewOrderRetrieveDestroyAPIView.as_view(),
-        name='details-neworder'),
+        name='destroy-neworder'),
 
     # SewingModel
     path(
