@@ -23,12 +23,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('accounts/', include("accounts.urls")),
-    path('client/', include("client.urls")),
-    path('employees/', include("employees.urls")),
+    # path('accounts/', include("accounts.urls")),
+    # path('client/', include("client.urls")),
+    # path('employees/', include("employees.urls")),
     path('factory/', include("factory.urls")),
 
-    # auth
+
+    # # auth
     path('api-auth/', include('rest_framework.urls')),
 ]
 
