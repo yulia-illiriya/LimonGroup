@@ -24,7 +24,7 @@ class Price(models.Model):
 
 
 class SewingModel(models.Model):
-    client = models.CharField(max_length=50, verbose_name='Клиент')
+    client = models.ManyToManyField(Client,  verbose_name='Клиент')
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,
