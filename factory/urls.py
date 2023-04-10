@@ -5,28 +5,28 @@ from . import views
 urlpatterns = [
 
     path(
-        'list-dailywork/',
-        views.DailyWorkListAPIView.as_view(),
+        'listcreate-dailywork/',
+        views.DailyWorkListCreateAPIView.as_view(),
         name='list-dailywork'),
     path(
-        'create-dailywork/',
-        views.DailyWorkCreateAPIView.as_view(),
+        'update-dailywork/',
+        views.DailyWorkRetrieveUpdateAPIView.as_view(),
         name='create-dailywork'),
     path(
-        'details-dailywork/',
-        views.DailyWorkDetailsAPIView.as_view(),
+        'destroy-dailywork/<int:pk>/',
+        views.DailyWorkRetrieveDestroyAPIView.as_view(),
         name='details-dailywork'),
     path(
-        'list-neworder/',
+        'listcreate-neworder/',
         views.NewOrderListAPIView.as_view(),
         name='list-neworder'),
     path(
-        'create-neworder/',
-        views.NewOrderCreateAPIView.as_view(),
+        'update-neworder/',
+        views.NewOrderRetrieveUpdateAPIView.as_view(),
         name='create-neworder'),
     path(
-        'details-neworder/',
-        views.NewOrderDetailsAPIView.as_view(),
+        'destroy-neworder/<int:pk>/',
+        views.NewOrderRetrieveDestroyAPIView.as_view(),
         name='details-neworder'),
 
     # SewingModel

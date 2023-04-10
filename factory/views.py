@@ -7,12 +7,6 @@ from .models import (Order, SewingModel, DailyWork,
                      NewOrder, Price)
 
 
-
-
-
-
-
-
 class PriceListCreateAPIView(generics.ListCreateAPIView):
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
@@ -38,7 +32,7 @@ sewingModel_list_create = SewingModelListCreateAPIView.as_view()
 
 
 class SewingModelRetrieveUpdateDestroyAPIView(
-        generics.RetrieveUpdateDestroyAPIView):
+    generics.RetrieveUpdateDestroyAPIView):
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
 
@@ -46,31 +40,32 @@ class SewingModelRetrieveUpdateDestroyAPIView(
 sewingModel_details = SewingModelRetrieveUpdateDestroyAPIView.as_view()
 
 
-class DailyWorkListAPIView(generics.ListAPIView):
+class DailyWorkListCreateAPIView(generics.ListCreateAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
 
 
-class DailyWorkCreateAPIView(generics.CreateAPIView):
+class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
 
 
-class DailyWorkDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+class DailyWorkRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
 
 
-class NewOrderListAPIView(generics.ListAPIView):
+class NewOrderListAPIView(generics.ListCreateAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = NewOrderSerializer
 
 
-class NewOrderCreateAPIView(generics.CreateAPIView):
+class NewOrderRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = NewOrderSerializer
 
 
-class NewOrderDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
+class NewOrderRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = NewOrderSerializer
+
