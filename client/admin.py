@@ -20,7 +20,6 @@ admin.site.register(Client, ClientAdmin)
 class CatalogAdmin(admin.ModelAdmin):
     list_display = ['articul',
                     'colors',
-                    'size',
                     'image',
                     'quantity',
                     'category']

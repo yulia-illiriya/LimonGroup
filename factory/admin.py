@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import DailyWork, NewOrder
+from .models import DailyWork, NewOrder, Price\
+
+
+
+admin.site.register(Price)
+
 
 
 class DailyAdmin(admin.ModelAdmin):
