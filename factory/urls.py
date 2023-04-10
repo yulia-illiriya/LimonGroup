@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 
+
 urlpatterns = [
 
     path(
@@ -59,6 +60,53 @@ urlpatterns = [
         views.price_ret_destroy,
         name='price-ret-destroy'),
 
+
+    #Storage
+
+    path(
+        'storage-list-create/',
+        views.StorageListAPIView.as_view(),
+        name='price-list-create'),
+    path(
+        'storage-update/<int:pk>/',
+        views.StorageRetrieveUpdateAPIView.as_view(),
+        name='price-ret-update'),
+    path(
+        'storage-destroy/<int:pk>/',
+        views.StorageRetrieveDestroyAPIView.as_view(),
+        name='price-ret-destroy'),
+
+
+    #RawStuff
+
+    path(
+        'rawstuff-list-create/',
+        views.RawStuffListCreateAPIView.as_view(),
+        name='price-list-create'),
+    path(
+        'rawstuff-update/<int:pk>/',
+        views.RawStuffRetrieveUpdateAPIView.as_view(),
+        name='price-ret-update'),
+    path(
+        'rawstuff-destroy/<int:pk>/',
+        views.RawStuffRetrieveDestroyAPIView.as_view(),
+        name='price-ret-destroy'),
+
+
+    #FabricCutting
+
+    path(
+        'fabriccutting-list-create/',
+        views.FabricCuttingListCreateAPIView.as_view(),
+        name='price-list-create'),
+    path(
+        'fabriccutting-update/<int:pk>/',
+        views.FabricCuttingRetrieveUpdateAPIView.as_view(),
+        name='price-ret-update'),
+    path(
+        'fabriccutting-destroy/<int:pk>/',
+        views.FabricCuttingRetrieveDestroyAPIView.as_view(),
+        name='price-ret-destroy'),
 
 
 ]

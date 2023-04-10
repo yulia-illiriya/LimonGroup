@@ -103,6 +103,7 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
+    objects = None
     product = models.ForeignKey(
         SewingModel,
         on_delete=models.CASCADE,
