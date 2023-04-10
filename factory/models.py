@@ -4,7 +4,6 @@ from employees.models import Employee
 
 
 class Price(models.Model):
-    objects = None
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
     updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
     start_date = models.DateTimeField("Цена действительна с")
@@ -12,8 +11,9 @@ class Price(models.Model):
     is_actual = models.BooleanField("Актуально?", default=True)
     value = models.DecimalField("Стоимость", max_digits=7, decimal_places=2)
 
-    def __str__(self):
-        return self.value
+    def __str__(self) -> str:
+        return f'Стоимость {self.value}'
+    
 
     class Meta:
         verbose_name = "Стоимость пошива"
@@ -25,7 +25,7 @@ class Price(models.Model):
 
 
 class SewingModel(models.Model):
-    client = models.CharField(max_length=50, verbose_name='Клиент')
+    client = models.ManyToManyField(Client,  verbose_name='Клиент')
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,

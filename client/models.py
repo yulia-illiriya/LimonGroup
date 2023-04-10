@@ -28,23 +28,16 @@ class CatalogCategory(models.Model):
     def __str__(self):
         return self.name
 
+class Size(models.Model):
+    title = models.CharField(max_length=5, verbose_name="Размер:")
 
-class Catalog(models.Model):
-    S = "S"
-    M = "M"
-    L = "L"
-    XL = "XL"
-    MODEL_SIZE_CHOICES = [
-        (S, "S"),
-        (M, "M"),
-        (L, "L"),
-        (XL, "XL"),
-        
-        ]
+    def __str__(self) -> str:
+        return self.title
     
+class Catalog(models.Model):
     articul = models.CharField(max_length=200, verbose_name='Артикуль:')
     colors = models.CharField(max_length=100, verbose_name='Цвет:')
-    size = models.CharField(verbose_name='Размер:', max_length=4, choices=MODEL_SIZE_CHOICES)
+    size = models.ManyToManyField(Size, verbose_name='Размер:')
     image = models.ImageField(
         upload_to='media/%Y/%m/%d',
         verbose_name='Изображение:')
