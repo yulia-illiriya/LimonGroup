@@ -15,6 +15,7 @@ config/__pycache__/
 factory/migrations/
 employees/migrations/
 employees/__pycache__/
+*__pycache__
 
 
 # Backup files # 
