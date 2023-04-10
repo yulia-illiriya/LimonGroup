@@ -7,14 +7,15 @@ from django.contrib.auth.models import PermissionsMixin
 from accounts.managers import UserManager
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    POSITION_CHOICES = (
-        ('Administrator', 'Administrator'),
-        ('Technologist', 'Technologist'),
-        ('Zakroi', 'Zakroi')
-    )
+class UserRole(models.Model):
+    name = models.CharField(max_length=20, verbose_name='Роль пользователя:')
 
-    position = models.CharField(max_length=50, choices=POSITION_CHOICES)
+    def __str__(self) -> str:
+        return self.name
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    # user_role = models.ForeignKey(UserRole, verbose_name='Роль пользователя:', on_delete=models.CASCADE)
     email = models.EmailField(
         verbose_name="Email",
         max_length=255,
@@ -25,14 +26,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
     phone_number = models.CharField(
-        validators=[RegexValidator(
-            regex='^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$',
-            message='phone number must be digits',
-            code='invalid phone number'
-        )],
+        validators=[
+            RegexValidator(
+                regex='^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$',
+                message='phone number must be digits',
+                code='invalid phone number')],
         max_length=15,
-        verbose_name='Контакты'
-    )
+        verbose_name='Контакты')
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

@@ -23,7 +23,7 @@ class Employee(models.Model):
     salary = models.DecimalField("Оклад", max_digits=6, decimal_places=2, default=0)
 
     def __str__(self):
-        return self.full_name, self.position
+        return f"{self.full_name} {self.position}"
 
     class Meta:
         verbose_name = "Сотрудник"
