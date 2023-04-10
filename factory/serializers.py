@@ -5,7 +5,7 @@ from .models import (
     Order,
     NewOrder,
     DailyWork,
-    SewingModel
+    SewingModel, FabricCutting, RawStuff, Storage
 )
 
 from .models import Order, SewingModel, Price
@@ -41,4 +41,22 @@ class NewOrderSerializer(serializers.ModelSerializer):
 class DailyWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyWork
+        fields = '__all__'
+
+
+class FabricCuttingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FabricCutting
+        fields = '__all__'
+
+
+class RawStuffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RawStuff
+        fields = '__all__'
+
+
+class StorageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Storage
         fields = '__all__'
