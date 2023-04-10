@@ -5,7 +5,7 @@ from .serializers import (OrderSerializer,
                           NewOrderSerializer, PriceSerializer, FabricCuttingSerializer, RawStuffSerializer,
                           StorageSerializer)
 from .models import (Order, SewingModel, DailyWork,
-                     NewOrder, Price)
+                     NewOrder, Price, FabricCutting, RawStuff, Storage)
 
 
 class PriceListCreateAPIView(generics.ListCreateAPIView):
@@ -89,17 +89,50 @@ class NewOrderRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     serializer_class = NewOrderSerializer
 
 
+
+class FabricCuttingListCreateAPIView(generics.ListCreateAPIView):
+    queryset = FabricCutting.objects.all()
+    serializer_class = FabricCuttingSerializer
+
+
+class FabricCuttingRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = FabricCutting.objects.all()
+    serializer_class = FabricCuttingSerializer
+
+
 class FabricCuttingRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = FabricCuttingSerializer
 
 
-class RawStuffRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
-    queryset = NewOrder.objects.all()
+class RawStuffListCreateAPIView(generics.ListCreateAPIView):
+    queryset = RawStuff.objects.all()
     serializer_class = RawStuffSerializer
 
 
-class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
-    queryset = NewOrder.objects.all()
+class RawStuffRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = RawStuff.objects.all()
+    serializer_class = RawStuffSerializer
+
+
+class RawStuffRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = RawStuff.objects.all()
+    serializer_class = FabricCuttingSerializer
+
+
+class StorageListAPIView(generics.ListCreateAPIView):
+    queryset = Storage.objects.all()
     serializer_class = StorageSerializer
+
+
+class StorageRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Storage.objects.all()
+    serializer_class = StorageSerializer
+
+
+class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = Storage.objects.all()
+    serializer_class = StorageSerializer
+
+
 
