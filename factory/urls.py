@@ -108,5 +108,8 @@ urlpatterns = [
         views.FabricCuttingRetrieveDestroyAPIView.as_view(),
         name='price-ret-destroy'),
 
+    # Production
+    path('production', views.ProductionView.as_view(), name='production')
+
 
 ]

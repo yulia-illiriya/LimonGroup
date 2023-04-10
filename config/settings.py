@@ -76,10 +76,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 DATABASES = {"default": env.db()}
-<<<<<<< HEAD
-=======
 
->>>>>>> 4540f0630bb53286bd4830f5fbe83c970b21c23b
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
