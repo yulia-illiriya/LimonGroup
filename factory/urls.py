@@ -31,20 +31,33 @@ urlpatterns = [
 
     # SewingModel
     path(
-        'Sewmodel-create/',
+        'Sewmodel-list-create/',
         views.sewingModel_list_create,
         name='Sewmodel-list-create'),
     path(
-        'Sewmodel-details/<int:pk>/',
-        views.sewingModel_details,
-        name='Sewmodel-details'),
+        'Sewmodel-update/<int:pk>/',
+        views.sewingModel_ret_update,
+        name='Sewmodel-ret-update'),
+
+    path(
+        'Sewmodel-destroy/<int:pk>/',
+        views.sewingModel_ret_destroy,
+        name='Sewmodel-ret-destroy'),
+
 
     # Price
     path(
         'price-list-create/',
         views.price_list_create,
         name='price-list-create'),
-    path('price-details/<int:pk>/', views.price_details, name='price-details'),
+    path(
+        'price-update/<int:pk>/',
+        views.price_ret_update,
+        name='price-ret-update'),
+    path(
+        'price-destroy/<int:pk>/',
+        views.price_ret_destroy,
+        name='price-ret-destroy'),
 
 
 

@@ -9,6 +9,14 @@ db_sqlite3
 __pycache__
 db.sqlite3
 media
+client/__pycache__/
+client/migrations/
+config/__pycache__/
+factory/migrations/
+employees/migrations/
+employees/__pycache__/
+*__pycache__
+
 
 # Backup files # 
 *.bak 

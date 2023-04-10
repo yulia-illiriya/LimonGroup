@@ -8,6 +8,8 @@ from .models import (Order, SewingModel, DailyWork,
 
 
 class PriceListCreateAPIView(generics.ListCreateAPIView):
+<<<<<<< HEAD
+=======
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
 
@@ -15,12 +17,21 @@ class PriceListCreateAPIView(generics.ListCreateAPIView):
 price_list_create = PriceListCreateAPIView.as_view()
 
 
-class PriceUpdateAPIView(generics.UpdateAPIView):
+class PriceRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+>>>>>>> 207b92157997267570825649f950a6c68b3eaf54
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
 
 
-price_details = PriceUpdateAPIView.as_view()
+price_ret_update = PriceRetrieveUpdateAPIView.as_view()
+
+
+class PriceRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializer
+
+
+price_ret_destroy = PriceRetrieveDestroyAPIView.as_view()
 
 
 class SewingModelListCreateAPIView(generics.ListCreateAPIView):
@@ -31,13 +42,25 @@ class SewingModelListCreateAPIView(generics.ListCreateAPIView):
 sewingModel_list_create = SewingModelListCreateAPIView.as_view()
 
 
+<<<<<<< HEAD
 class SewingModelRetrieveUpdateDestroyAPIView(
     generics.RetrieveUpdateDestroyAPIView):
+=======
+class SewingModelRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
 
 
-sewingModel_details = SewingModelRetrieveUpdateDestroyAPIView.as_view()
+sewingModel_ret_update = SewingModelRetrieveUpdateAPIView.as_view()
+
+
+class SewingModelRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+>>>>>>> 207b92157997267570825649f950a6c68b3eaf54
+    queryset = SewingModel.objects.all()
+    serializer_class = SewingModelSerializer
+
+
+sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 
 
 class DailyWorkListCreateAPIView(generics.ListCreateAPIView):
