@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from .models import Employee, Position
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny
 
-import json
 
 class PositionSerializer(serializers.ModelSerializer):
     permission_classes = [AllowAny,]
+    # employee = serializers.StringRelatedField(many=True)
          
     class Meta:
         model = Position
@@ -14,9 +14,11 @@ class PositionSerializer(serializers.ModelSerializer):
     
 class EmployeeSerializer(serializers.ModelSerializer):
     permission_classes = [AllowAny,]
-    position = PositionSerializer
-    
+    position = serializers.SlugRelatedField(slug_field='name', queryset=Position.objects.all())
+                
     class Meta:
         model = Employee
-        fields = "__all__"
+        fields = '__all__'
         
+    
+    
