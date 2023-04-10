@@ -1,6 +1,5 @@
 from django.db import models
 
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import PermissionsMixin
@@ -37,7 +36,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-
     is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()
@@ -51,7 +49,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return self.is_superuser
 
-    
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'

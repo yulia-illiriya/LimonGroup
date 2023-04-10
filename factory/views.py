@@ -2,7 +2,8 @@ from rest_framework import generics
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
-                          NewOrderSerializer, PriceSerializer)
+                          NewOrderSerializer, PriceSerializer, FabricCuttingSerializer, RawStuffSerializer,
+                          StorageSerializer)
 from .models import (Order, SewingModel, DailyWork,
                      NewOrder, Price)
 
@@ -87,3 +88,17 @@ class NewOrderRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = NewOrderSerializer
 
+
+class FabricCuttingRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = NewOrder.objects.all()
+    serializer_class = FabricCuttingSerializer
+
+
+class RawStuffRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = NewOrder.objects.all()
+    serializer_class = RawStuffSerializer
+
+
+class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = NewOrder.objects.all()
+    serializer_class = StorageSerializer
