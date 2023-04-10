@@ -8,8 +8,7 @@ from .models import (Order, SewingModel, DailyWork,
 
 
 class PriceListCreateAPIView(generics.ListCreateAPIView):
-<<<<<<< HEAD
-=======
+
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
 
@@ -18,7 +17,6 @@ price_list_create = PriceListCreateAPIView.as_view()
 
 
 class PriceRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
->>>>>>> 207b92157997267570825649f950a6c68b3eaf54
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
 
@@ -42,10 +40,7 @@ class SewingModelListCreateAPIView(generics.ListCreateAPIView):
 sewingModel_list_create = SewingModelListCreateAPIView.as_view()
 
 
-<<<<<<< HEAD
-class SewingModelRetrieveUpdateDestroyAPIView(
-    generics.RetrieveUpdateDestroyAPIView):
-=======
+
 class SewingModelRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
@@ -55,7 +50,7 @@ sewingModel_ret_update = SewingModelRetrieveUpdateAPIView.as_view()
 
 
 class SewingModelRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
->>>>>>> 207b92157997267570825649f950a6c68b3eaf54
+
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
 
