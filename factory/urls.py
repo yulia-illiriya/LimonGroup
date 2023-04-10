@@ -5,28 +5,28 @@ from . import views
 urlpatterns = [
 
     path(
-        'list-dailywork/',
-        views.DailyWorkListAPIView.as_view(),
+        'listcreate-dailywork/',
+        views.DailyWorkListCreateAPIView.as_view(),
         name='list-dailywork'),
     path(
-        'create-dailywork/',
-        views.DailyWorkCreateAPIView.as_view(),
+        'update-dailywork/',
+        views.DailyWorkRetrieveUpdateAPIView.as_view(),
         name='create-dailywork'),
     path(
-        'details-dailywork/',
-        views.DailyWorkDetailsAPIView.as_view(),
+        'destroy-dailywork/<int:pk>/',
+        views.DailyWorkRetrieveDestroyAPIView.as_view(),
         name='details-dailywork'),
     path(
-        'list-neworder/',
+        'listcreate-neworder/',
         views.NewOrderListAPIView.as_view(),
         name='list-neworder'),
     path(
-        'create-neworder/',
-        views.NewOrderCreateAPIView.as_view(),
+        'update-neworder/',
+        views.NewOrderRetrieveUpdateAPIView.as_view(),
         name='create-neworder'),
     path(
-        'details-neworder/',
-        views.NewOrderDetailsAPIView.as_view(),
+        'destroy-neworder/<int:pk>/',
+        views.NewOrderRetrieveDestroyAPIView.as_view(),
         name='details-neworder'),
 
     # SewingModel
@@ -35,16 +35,29 @@ urlpatterns = [
         views.sewingModel_list_create,
         name='Sewmodel-list-create'),
     path(
-        'Sewmodel-details/<int:pk>/',
-        views.sewingModel_details,
-        name='Sewmodel-details'),
+        'Sewmodel-update/<int:pk>/',
+        views.sewingModel_ret_update,
+        name='Sewmodel-ret-update'),
+
+    path(
+        'Sewmodel-destroy/<int:pk>/',
+        views.sewingModel_ret_destroy,
+        name='Sewmodel-ret-destroy'),
+
 
     # Price
     path(
         'price-list-create/',
         views.price_list_create,
         name='price-list-create'),
-    path('price-details/<int:pk>/', views.price_details, name='price-details'),
+    path(
+        'price-update/<int:pk>/',
+        views.price_ret_update,
+        name='price-ret-update'),
+    path(
+        'price-destroy/<int:pk>/',
+        views.price_ret_destroy,
+        name='price-ret-destroy'),
 
 
 
