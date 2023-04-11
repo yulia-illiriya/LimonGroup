@@ -24,11 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # path('accounts/', include("accounts.urls")),
-<<<<<<< HEAD
-    # path('client/', include("client.urls")),
-=======
+
     path('client/', include("client.urls")),
->>>>>>> 33abb29a33f6101d9de3e5b7ffbcd0d6bb44292a
+
+    path('client/', include("client.urls")),
+
     path('employees/', include("employees.urls")),
     path('factory/', include("factory.urls")),
 

@@ -1,15 +1,20 @@
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
-                          NewOrderSerializer, PriceSerializer, FabricCuttingSerializer, RawStuffSerializer,
-                          StorageSerializer)
+                          NewOrderSerializer,
+                          PriceSerializer,
+                          FabricCuttingSerializer,
+                          RawStuffSerializer,
+                          StorageSerializer,
+                          ProductionSerializer)
 from .models import (Order, SewingModel, DailyWork,
                      NewOrder, Price, FabricCutting, RawStuff, Storage)
 
 
 class PriceListCreateAPIView(generics.ListCreateAPIView):
-
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
 
@@ -41,7 +46,6 @@ class SewingModelListCreateAPIView(generics.ListCreateAPIView):
 sewingModel_list_create = SewingModelListCreateAPIView.as_view()
 
 
-
 class SewingModelRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
@@ -51,7 +55,6 @@ sewingModel_ret_update = SewingModelRetrieveUpdateAPIView.as_view()
 
 
 class SewingModelRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
-
     queryset = SewingModel.objects.all()
     serializer_class = SewingModelSerializer
 
@@ -87,7 +90,6 @@ class NewOrderRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
 class NewOrderRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = NewOrder.objects.all()
     serializer_class = NewOrderSerializer
-
 
 
 class FabricCuttingListCreateAPIView(generics.ListCreateAPIView):
@@ -135,4 +137,11 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     serializer_class = StorageSerializer
 
 
-
+class ProductionView(APIView):
+    def get(self, request):
+        queryset = DailyWork.objects.all()
+        date = request.query_params.get('date')
+        if date:
+            queryset = queryset.filter(date=date)
+            serializer = ProductionSerializer(queryset, many=True)
+            return Response(serializer.data)
