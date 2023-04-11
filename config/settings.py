@@ -77,7 +77,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {"default": env.db()}
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -130,6 +129,5 @@ REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
     'DATE_FORMAT': '%d.%m.%Y',
 }
-
 
 AUTH_USER_MODEL = 'accounts.User'

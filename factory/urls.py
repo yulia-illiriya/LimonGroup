@@ -66,15 +66,15 @@ urlpatterns = [
     path(
         'storage-list-create/',
         views.StorageListAPIView.as_view(),
-        name='price-list-create'),
+        name='storage-list-create'),
     path(
         'storage-update/<int:pk>/',
         views.StorageRetrieveUpdateAPIView.as_view(),
-        name='price-ret-update'),
+        name='storage-ret-update'),
     path(
         'storage-destroy/<int:pk>/',
         views.StorageRetrieveDestroyAPIView.as_view(),
-        name='price-ret-destroy'),
+        name='storage-ret-destroy'),
 
 
     #RawStuff
@@ -82,15 +82,15 @@ urlpatterns = [
     path(
         'rawstuff-list-create/',
         views.RawStuffListCreateAPIView.as_view(),
-        name='price-list-create'),
+        name='rawstuff-list-create'),
     path(
         'rawstuff-update/<int:pk>/',
         views.RawStuffRetrieveUpdateAPIView.as_view(),
-        name='price-ret-update'),
+        name='rawstuff-ret-update'),
     path(
         'rawstuff-destroy/<int:pk>/',
         views.RawStuffRetrieveDestroyAPIView.as_view(),
-        name='price-ret-destroy'),
+        name='rawstuff-ret-destroy'),
 
 
     #FabricCutting
@@ -98,15 +98,15 @@ urlpatterns = [
     path(
         'fabriccutting-list-create/',
         views.FabricCuttingListCreateAPIView.as_view(),
-        name='price-list-create'),
+        name='fabriccutting-list-create'),
     path(
         'fabriccutting-update/<int:pk>/',
         views.FabricCuttingRetrieveUpdateAPIView.as_view(),
-        name='price-ret-update'),
+        name='fabriccutting-ret-update'),
     path(
         'fabriccutting-destroy/<int:pk>/',
         views.FabricCuttingRetrieveDestroyAPIView.as_view(),
-        name='price-ret-destroy'),
+        name='fabriccutting-ret-destroy'),
 
     # Production
     path('production', views.ProductionView.as_view(), name='production')
