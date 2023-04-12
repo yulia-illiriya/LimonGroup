@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import OrderCreateUpdateAPIView
 
 
 
@@ -109,7 +110,9 @@ urlpatterns = [
         name='fabriccutting-ret-destroy'),
 
     # Production
-    path('production', views.ProductionView.as_view(), name='production')
+    path('production', views.ProductionView.as_view(), name='production'),
+    
+    path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
 
 
 ]

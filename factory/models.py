@@ -25,7 +25,7 @@ class Price(models.Model):
 
 
 class SewingModel(models.Model):
-    client = models.ManyToManyField(Client,  verbose_name='Клиент')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент', related_name="sewing_model")
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,
@@ -48,7 +48,9 @@ class Order(models.Model):
     client = models.ForeignKey(
         Client,
         verbose_name='Клиент',
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        related_name="order"
+        )
     name_order = models.ForeignKey(
         SewingModel,
         verbose_name='Модель',
@@ -107,8 +109,10 @@ class NewOrder(models.Model):
     product = models.ForeignKey(
         SewingModel,
         on_delete=models.CASCADE,
-        verbose_name="Модель")
-    price = models.PositiveIntegerField(verbose_name="Стоимость")
+        verbose_name="Модель",
+        related_name="new_order"
+        )
+    price = models.DecimalField(verbose_name="Стоимость", decimal_places=2, max_digits=7)
     color = models.CharField(max_length=25, verbose_name="Цвет")
     image = models.ImageField(
         null=True,
@@ -117,7 +121,9 @@ class NewOrder(models.Model):
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
-        verbose_name="Клиент")
+        verbose_name="Клиент",
+        related_name="new_order"
+        )
     received_date = models.DateField(verbose_name="Дата получения")
     delivery_date = models.DateField(verbose_name="Дата отправки")
 
