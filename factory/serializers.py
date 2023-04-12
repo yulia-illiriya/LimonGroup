@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from client.models import Client
 
-
 from .models import (
     Order,
     NewOrder,
@@ -16,7 +15,6 @@ class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
         fields = "__all__"
-
 
 
 class SewingModelSerializer(serializers.ModelSerializer):
@@ -63,3 +61,11 @@ class StorageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Storage
         fields = '__all__'
+
+
+class ProductionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyWork
+        fields = ('product',
+                  'quantity',
+                  'date')

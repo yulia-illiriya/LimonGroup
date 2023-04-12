@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 
+
 urlpatterns = [
 
     path(
@@ -9,25 +10,25 @@ urlpatterns = [
         views.DailyWorkListCreateAPIView.as_view(),
         name='list-dailywork'),
     path(
-        'update-dailywork/',
+        'update-dailywork/<int:pk>',
         views.DailyWorkRetrieveUpdateAPIView.as_view(),
         name='create-dailywork'),
     path(
         'destroy-dailywork/<int:pk>/',
         views.DailyWorkRetrieveDestroyAPIView.as_view(),
-        name='details-dailywork'),
+        name='destroy-dailywork'),
     path(
         'listcreate-neworder/',
         views.NewOrderListAPIView.as_view(),
         name='list-neworder'),
     path(
-        'update-neworder/',
+        'update-neworder/<int:pk>',
         views.NewOrderRetrieveUpdateAPIView.as_view(),
-        name='create-neworder'),
+        name='update-neworder'),
     path(
         'destroy-neworder/<int:pk>/',
         views.NewOrderRetrieveDestroyAPIView.as_view(),
-        name='details-neworder'),
+        name='destroy-neworder'),
 
     # SewingModel
     path(
@@ -59,6 +60,56 @@ urlpatterns = [
         views.price_ret_destroy,
         name='price-ret-destroy'),
 
+
+    #Storage
+
+    path(
+        'storage-list-create/',
+        views.StorageListAPIView.as_view(),
+        name='storage-list-create'),
+    path(
+        'storage-update/<int:pk>/',
+        views.StorageRetrieveUpdateAPIView.as_view(),
+        name='storage-ret-update'),
+    path(
+        'storage-destroy/<int:pk>/',
+        views.StorageRetrieveDestroyAPIView.as_view(),
+        name='storage-ret-destroy'),
+
+
+    #RawStuff
+
+    path(
+        'rawstuff-list-create/',
+        views.RawStuffListCreateAPIView.as_view(),
+        name='rawstuff-list-create'),
+    path(
+        'rawstuff-update/<int:pk>/',
+        views.RawStuffRetrieveUpdateAPIView.as_view(),
+        name='rawstuff-ret-update'),
+    path(
+        'rawstuff-destroy/<int:pk>/',
+        views.RawStuffRetrieveDestroyAPIView.as_view(),
+        name='rawstuff-ret-destroy'),
+
+
+    #FabricCutting
+
+    path(
+        'fabriccutting-list-create/',
+        views.FabricCuttingListCreateAPIView.as_view(),
+        name='fabriccutting-list-create'),
+    path(
+        'fabriccutting-update/<int:pk>/',
+        views.FabricCuttingRetrieveUpdateAPIView.as_view(),
+        name='fabriccutting-ret-update'),
+    path(
+        'fabriccutting-destroy/<int:pk>/',
+        views.FabricCuttingRetrieveDestroyAPIView.as_view(),
+        name='fabriccutting-ret-destroy'),
+
+    # Production
+    path('production', views.ProductionView.as_view(), name='production')
 
 
 ]
