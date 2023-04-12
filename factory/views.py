@@ -145,3 +145,7 @@ class ProductionView(APIView):
             queryset = queryset.filter(date=date)
             serializer = ProductionSerializer(queryset, many=True)
             return Response(serializer.data)
+
+class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = OrderSerializer
+    serializer_class = OrderSerializer
