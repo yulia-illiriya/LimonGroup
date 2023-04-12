@@ -1,6 +1,4 @@
 from rest_framework import generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
@@ -136,15 +134,6 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = Storage.objects.all()
     serializer_class = StorageSerializer
 
-
-class ProductionView(APIView):
-    def get(self, request):
-        queryset = DailyWork.objects.all()
-        date = request.query_params.get('date')
-        if date:
-            queryset = queryset.filter(date=date)
-            serializer = ProductionSerializer(queryset, many=True)
-            return Response(serializer.data)
 
 class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = OrderSerializer
