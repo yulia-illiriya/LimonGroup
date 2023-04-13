@@ -28,12 +28,14 @@ class CatalogCategory(models.Model):
     def __str__(self):
         return self.name
 
+
 class Size(models.Model):
     title = models.CharField(max_length=5, verbose_name="Размер:")
 
     def __str__(self) -> str:
         return self.title
-    
+
+
 class Catalog(models.Model):
     articul = models.CharField(max_length=200, verbose_name='Артикуль:')
     colors = models.CharField(max_length=100, verbose_name='Цвет:')

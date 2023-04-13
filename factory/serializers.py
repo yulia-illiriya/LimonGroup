@@ -1,14 +1,12 @@
 from rest_framework import serializers
-from client.models import Client
 
 from .models import (
+    Client,
     Order,
     NewOrder,
     DailyWork,
-    SewingModel, FabricCutting, RawStuff, Storage
+    SewingModel, FabricCutting, RawStuff, Storage, Price, QuantityModel
 )
-
-from .models import Order, SewingModel, Price
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -19,7 +17,7 @@ class PriceSerializer(serializers.ModelSerializer):
 
 class SewingModelSerializer(serializers.ModelSerializer):
     client = serializers.SlugRelatedField(slug_field='full_name', queryset=Client.objects.all())
-    
+
     class Meta:
         model = SewingModel
         fields = "__all__"
@@ -32,17 +30,31 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class NewOrderSerializer(serializers.ModelSerializer):
-    product = serializers.StringRelatedField(read_only=True)
+    # sewing_model = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = NewOrder
         fields = '__all__'
 
 
+class QuantityModelSerializer(serializers.ModelSerializer):
+    # sewing_model = serializers.StringRelatedField()
+
+    class Meta:
+        model = QuantityModel
+        fields = '__all__'
+
+
 class DailyWorkSerializer(serializers.ModelSerializer):
+    daily_salary = serializers.ReadOnlyField()
+
     class Meta:
         model = DailyWork
-        fields = '__all__'
+        fields = ('employee',
+                  'quantity',
+                  'date',
+                  'prepayment',
+                  'daily_salary')
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
@@ -61,11 +73,3 @@ class StorageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Storage
         fields = '__all__'
-
-
-class ProductionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DailyWork
-        fields = ('product',
-                  'quantity',
-                  'date')
