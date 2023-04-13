@@ -132,8 +132,8 @@ class NewOrder(models.Model):
         verbose_name="Клиент",
         related_name="client"
     )
-    received_date = models.DateField(verbose_name="Дата получения")
-    delivery_date = models.DateField(verbose_name="Дата отправки")
+    received_date = models.DateField(verbose_name="Дата получения", null=True)
+    delivery_date = models.DateField(verbose_name="Дата отправки", null=True)
 
     def __str__(self):
         return self.sewing_model
