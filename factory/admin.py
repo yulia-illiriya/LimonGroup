@@ -1,26 +1,43 @@
 from django.contrib import admin
-from .models import DailyWork, NewOrder, Price\
+from .models import DailyWork, NewOrder, Price, QuantityModel, SewingModel
 
 
+class QuantityModelAdmin(admin.ModelAdmin):
+    list_display = ['sewing_model', 'quantity']
 
-admin.site.register(Price)
+
+admin.site.register(QuantityModel, QuantityModelAdmin)
 
 
+class PriceAdmin(admin.ModelAdmin):
+    list_display = ['created_at',
+                    'updated_at',
+                    'start_date',
+                    'end_date',
+                    'is_actual',
+                    'value']
 
-class DailyAdmin(admin.ModelAdmin):
+    ordering = ['-created_at']
+
+
+admin.site.register(Price, PriceAdmin)
+
+
+class DailyWorkAdmin(admin.ModelAdmin):
     list_display = ['employee',
                     'quantity',
                     'date',
-                    'prepayment']
+                    'prepayment'
+                    ]
 
     ordering = ['date']
 
 
-admin.site.register(DailyWork, DailyAdmin)
+admin.site.register(DailyWork, DailyWorkAdmin)
 
 
 class NewOrderAdmin(admin.ModelAdmin):
-    list_display = ['product',
+    list_display = ['sewing_model',
                     'price',
                     'color',
                     'image',
@@ -32,3 +49,15 @@ class NewOrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(NewOrder, NewOrderAdmin)
+
+
+class SewingModelAdmin(admin.ModelAdmin):
+    list_display = ['client',
+                    'color',
+                    'material',
+                    'type',
+                    'labor_cost',
+                    'client_price']
+
+
+admin.site.register(SewingModel, SewingModelAdmin)

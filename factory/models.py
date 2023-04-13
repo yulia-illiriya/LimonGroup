@@ -13,11 +13,10 @@ class Price(models.Model):
 
     def __str__(self) -> str:
         return f'Стоимость {self.value}'
-    
 
     class Meta:
-        verbose_name = "Стоимость пошива"
-        # verbose_name = "Цены"
+        verbose_name = "Стоимость"
+        verbose_name_plural = "Цены"
         ordering = ['updated_at']
 
 
@@ -33,15 +32,17 @@ class SewingModel(models.Model):
         blank=True,
         null=True)
     type = models.CharField(max_length=50, verbose_name='Тип модели')
-    price_for_one = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name='Цена за штуку')
+    labor_cost = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена за штуку",
+                                   related_name="model_labor_cost")
+    client_price = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена для клиента",
+                                     related_name="model_client_price")
 
     def __str__(self):
         return self.type
 
     class Meta:
         verbose_name = 'Модель'
-        verbose_name_plural = 'Модель'
+        verbose_name_plural = 'Модели'
 
 
 class Order(models.Model):
@@ -50,7 +51,7 @@ class Order(models.Model):
         verbose_name='Клиент',
         on_delete=models.CASCADE,
         related_name="order"
-        )
+    )
     name_order = models.ForeignKey(
         SewingModel,
         verbose_name='Модель',
@@ -83,21 +84,29 @@ class Order(models.Model):
         return f'Имя клиента {self.client}. Имя продутка {self.name_order}.'
 
 
+class QuantityModel(models.Model):
+    sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
+                                     related_name="quantity")
+    quantity = models.PositiveIntegerField(verbose_name="Количество")
+
+
+    class Meta:
+        verbose_name = "Количество сшитой модели"
+        verbose_name_plural = "Количество сшитых моделей"
+
+    def __str__(self):
+        return f"{self.sewing_model} {str(self.quantity)}"
+
+
 class DailyWork(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
-    product = models.ForeignKey(
-        SewingModel,
-        on_delete=models.CASCADE,
-        verbose_name="Модель")  # модель
-    payment_per_day = models.IntegerField(
-        default=0, verbose_name="Зарплата за день")
-    quantity = models.PositiveIntegerField(verbose_name="Количество")
+    quantity = models.ForeignKey(QuantityModel, on_delete=models.CASCADE,
+                                 verbose_name="Количество", related_name="daily_quantity")
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.IntegerField(default=0, verbose_name="Аванс")
 
-    def __str__(self):
-        return self.date
+
 
     class Meta:
         verbose_name = "Ежедневник"
@@ -105,13 +114,12 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
-    objects = None
-    product = models.ForeignKey(
+    sewing_model = models.ForeignKey(
         SewingModel,
         on_delete=models.CASCADE,
         verbose_name="Модель",
         related_name="new_order"
-        )
+    )
     price = models.DecimalField(verbose_name="Стоимость", decimal_places=2, max_digits=7)
     color = models.CharField(max_length=25, verbose_name="Цвет")
     image = models.ImageField(
@@ -122,13 +130,13 @@ class NewOrder(models.Model):
         Client,
         on_delete=models.CASCADE,
         verbose_name="Клиент",
-        related_name="new_order"
-        )
+        related_name="client"
+    )
     received_date = models.DateField(verbose_name="Дата получения")
     delivery_date = models.DateField(verbose_name="Дата отправки")
 
     def __str__(self):
-        return self.product
+        return self.sewing_model
 
     class Meta:
         verbose_name = "Образец"

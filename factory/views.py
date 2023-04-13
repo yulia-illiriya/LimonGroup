@@ -1,4 +1,6 @@
 from rest_framework import generics
+from django.db.models.query import QuerySet
+from django.db.models import F
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
@@ -6,10 +8,9 @@ from .serializers import (OrderSerializer,
                           PriceSerializer,
                           FabricCuttingSerializer,
                           RawStuffSerializer,
-                          StorageSerializer,
-                          ProductionSerializer)
+                          StorageSerializer, QuantityModelSerializer)
 from .models import (Order, SewingModel, DailyWork,
-                     NewOrder, Price, FabricCutting, RawStuff, Storage)
+                     NewOrder, Price, FabricCutting, RawStuff, Storage, QuantityModel)
 
 
 class PriceListCreateAPIView(generics.ListCreateAPIView):
@@ -63,6 +64,13 @@ sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 class DailyWorkListCreateAPIView(generics.ListCreateAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
+
+    def get_queryset(self):
+        queryset: QuerySet[DailyWork] = super().get_queryset()
+        queryset = queryset.annotate(daily_salary=F("quantity__quantity") *
+                                                  F("quantity__sewing_model__labor_cost__value") - F("prepayment"))
+
+        return queryset
 
 
 class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
@@ -136,5 +144,10 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 
 
 class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = OrderSerializer
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+
+class QuantityModelCreateView(generics.CreateAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer

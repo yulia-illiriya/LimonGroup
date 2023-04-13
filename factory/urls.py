@@ -2,8 +2,6 @@ from django.urls import path
 from . import views
 from .views import OrderCreateUpdateAPIView
 
-
-
 urlpatterns = [
 
     path(
@@ -46,7 +44,6 @@ urlpatterns = [
         views.sewingModel_ret_destroy,
         name='Sewmodel-ret-destroy'),
 
-
     # Price
     path(
         'price-list-create/',
@@ -61,8 +58,7 @@ urlpatterns = [
         views.price_ret_destroy,
         name='price-ret-destroy'),
 
-
-    #Storage
+    # Storage
 
     path(
         'storage-list-create/',
@@ -77,8 +73,7 @@ urlpatterns = [
         views.StorageRetrieveDestroyAPIView.as_view(),
         name='storage-ret-destroy'),
 
-
-    #RawStuff
+    # RawStuff
 
     path(
         'rawstuff-list-create/',
@@ -93,8 +88,7 @@ urlpatterns = [
         views.RawStuffRetrieveDestroyAPIView.as_view(),
         name='rawstuff-ret-destroy'),
 
-
-    #FabricCutting
+    # FabricCutting
 
     path(
         'fabriccutting-list-create/',
@@ -108,11 +102,9 @@ urlpatterns = [
         'fabriccutting-destroy/<int:pk>/',
         views.FabricCuttingRetrieveDestroyAPIView.as_view(),
         name='fabriccutting-ret-destroy'),
-
-    # Production
-    path('production', views.ProductionView.as_view(), name='production'),
-    
+    #Order
     path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
-
+    # Quantity
+    path('quantity-model/', views.QuantityModelCreateView.as_view(), name="quantity_model")
 
 ]
