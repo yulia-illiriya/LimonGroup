@@ -37,8 +37,7 @@ admin.site.register(DailyWork, DailyWorkAdmin)
 
 
 class NewOrderAdmin(admin.ModelAdmin):
-    list_display = ['sewing_model',
-                    'price',
+    list_display = ['price',
                     'color',
                     'image',
                     'client',
@@ -52,8 +51,7 @@ admin.site.register(NewOrder, NewOrderAdmin)
 
 
 class SewingModelAdmin(admin.ModelAdmin):
-    list_display = ['client',
-                    'color',
+    list_display = ['color',
                     'material',
                     'type',
                     'labor_cost',
