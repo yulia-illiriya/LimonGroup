@@ -146,6 +146,11 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    
+
+class OrderListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 
 class QuantityModelCreateView(generics.CreateAPIView):

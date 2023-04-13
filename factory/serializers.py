@@ -5,7 +5,12 @@ from .models import (
     Order,
     NewOrder,
     DailyWork,
-    SewingModel, FabricCutting, RawStuff, Storage, Price, QuantityModel
+    SewingModel, 
+    FabricCutting, 
+    RawStuff, 
+    Storage, 
+    Price, 
+    QuantityModel
 )
 
 
@@ -16,27 +21,35 @@ class PriceSerializer(serializers.ModelSerializer):
 
 
 class SewingModelSerializer(serializers.ModelSerializer):
-    client = serializers.SlugRelatedField(slug_field='full_name', queryset=Client.objects.all())
-
     class Meta:
         model = SewingModel
         fields = "__all__"
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    sewing_model = SewingModelSerializer(many=True, read_only=True)
+        
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani', 'pod_flizelin', 'sewing_model']    
 
 
 class NewOrderSerializer(serializers.ModelSerializer):
-    # sewing_model = serializers.StringRelatedField(read_only=True)
+    client_name = serializers.SerializerMethodField()
 
     class Meta:
         model = NewOrder
-        fields = '__all__'
+        fields = ['description', 'price', 'color', 'client_name', 'received_date', 'delivery_date']
 
+    def get_client_name(self, obj):
+        return obj.client.full_name
 
+    def create(self, validated_data):
+        client_name = self.context['request'].data.get('client_name')
+        client, _ = Client.objects.get_or_create(full_name=client_name)
+        validated_data['client_id'] = client.id
+        return super().create(validated_data)
+    
 class QuantityModelSerializer(serializers.ModelSerializer):
     # sewing_model = serializers.StringRelatedField()
 

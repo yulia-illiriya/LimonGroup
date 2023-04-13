@@ -20,31 +20,6 @@ class Price(models.Model):
         ordering = ['updated_at']
 
 
-# Create your models here.
-
-
-class SewingModel(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент', related_name="sewing_model")
-    color = models.CharField(max_length=50, verbose_name='Цвет')
-    material = models.CharField(
-        max_length=50,
-        verbose_name='Материал',
-        blank=True,
-        null=True)
-    type = models.CharField(max_length=50, verbose_name='Тип модели')
-    labor_cost = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена за штуку",
-                                   related_name="model_labor_cost")
-    client_price = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена для клиента",
-                                     related_name="model_client_price")
-
-    def __str__(self):
-        return self.type
-
-    class Meta:
-        verbose_name = 'Модель'
-        verbose_name_plural = 'Модели'
-
-
 class Order(models.Model):
     client = models.ForeignKey(
         Client,
@@ -52,10 +27,6 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name="order"
     )
-    name_order = models.ForeignKey(
-        SewingModel,
-        verbose_name='Модель',
-        on_delete=models.CASCADE)
     data_poluchenia = models.DateField(
         auto_now_add=True, verbose_name='Дата Получения')
     quantity_zayav = models.IntegerField(
@@ -81,7 +52,32 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self) -> str:
-        return f'Имя клиента {self.client}. Имя продутка {self.name_order}.'
+        return f'{self.client} {self.quantity_zayav}'
+
+
+class SewingModel(models.Model):
+    
+    """Model for sewing"""
+    
+    color = models.CharField(max_length=50, verbose_name='Цвет')
+    material = models.CharField(
+        max_length=50,
+        verbose_name='Материал',
+        blank=True,
+        null=True)
+    type = models.CharField(max_length=50, verbose_name='Тип модели')
+    labor_cost = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена за штуку",
+                                   related_name="model_labor_cost")
+    client_price = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена для клиента",
+                                     related_name="model_client_price")
+    order = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL, verbose_name="Заказ", related_name="sewing_model")
+
+    def __str__(self):
+        return f"{self.type} {self.color} {self.material}"
+
+    class Meta:
+        verbose_name = 'Модель'
+        verbose_name_plural = 'Модели'
 
 
 class QuantityModel(models.Model):
@@ -114,14 +110,12 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
-    sewing_model = models.ForeignKey(
-        SewingModel,
-        on_delete=models.CASCADE,
-        verbose_name="Модель",
-        related_name="new_order"
-    )
+    
+    """Pattern for new clients"""
+    
     price = models.DecimalField(verbose_name="Стоимость", decimal_places=2, max_digits=7)
     color = models.CharField(max_length=25, verbose_name="Цвет")
+    description = models.TextField(verbose_name="Описание образца", null=True)
     image = models.ImageField(
         null=True,
         blank=True,
@@ -130,13 +124,13 @@ class NewOrder(models.Model):
         Client,
         on_delete=models.CASCADE,
         verbose_name="Клиент",
-        related_name="client"
+        related_name="new_pattern"
     )
     received_date = models.DateField(verbose_name="Дата получения", null=True)
     delivery_date = models.DateField(verbose_name="Дата отправки", null=True)
 
     def __str__(self):
-        return self.sewing_model
+        return f"{self.color} {self.description}"
 
     class Meta:
         verbose_name = "Образец"
@@ -194,7 +188,7 @@ class Storage(models.Model):
         blank=True,
         null=True,
         verbose_name='Брак')
-    created_at = models.DateTimeField(verbose_name='')
+    created_at = models.DateTimeField(verbose_name='запись создана')
     where_was_purchase = models.TextField(
         max_length=100,
         blank=True,
@@ -205,9 +199,6 @@ class Storage(models.Model):
         return self.product
 
     class Meta:
-        # verbose_name = "Образец"
-        # verbose_name_plural = "Образцы"
-        #
         verbose_name = 'Склад-Сырье'
         verbose_name_plural = 'Склад-Сырье'
 
