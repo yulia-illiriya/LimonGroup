@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import OrderCreateUpdateAPIView
+from .views import OrderCreateUpdateAPIView, OrderListCreateAPIView
 
 urlpatterns = [
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path(
         'update-dailywork/<int:pk>',
         views.DailyWorkRetrieveUpdateAPIView.as_view(),
-        name='create-dailywork'),
+        name='update-dailywork'),
     path(
         'destroy-dailywork/<int:pk>/',
         views.DailyWorkRetrieveDestroyAPIView.as_view(),
@@ -108,6 +108,7 @@ urlpatterns = [
         name='fabriccutting-ret-destroy'),
     # Order
     path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
+    path('order-create/', OrderListCreateAPIView.as_view(), name='order'),
     # Quantity
     path('quantity-model/', views.QuantityModelCreateView.as_view(), name="quantity_model")
 

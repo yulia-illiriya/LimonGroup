@@ -1,6 +1,4 @@
 from rest_framework import generics, status
-from django.db.models.query import QuerySet
-from django.db.models import F
 from rest_framework.response import Response
 
 from .serializers import (OrderSerializer,
@@ -69,17 +67,8 @@ class DailyWorkListAPIView(generics.ListAPIView):
 
 
 class DailyWorkCreateAPIView(generics.CreateAPIView):
+    queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
@@ -153,6 +142,11 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 
 
 class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+
+class OrderListCreateAPIView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
