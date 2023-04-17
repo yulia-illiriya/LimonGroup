@@ -21,7 +21,7 @@ class Employee(models.Model):
     start_date = models.DateField("Дата начала работы", default=timezone.now().date())
     position = models.ForeignKey(Position, on_delete=models.CASCADE,
                                  verbose_name="Должность", related_name="employees")
-    salary = models.DecimalField("Оклад", max_digits=6, decimal_places=2, default=0)
+    salary = models.DecimalField("Оклад", max_digits=8, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.full_name} {self.position}"
