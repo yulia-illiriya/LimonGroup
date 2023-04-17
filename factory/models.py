@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from client.models import Client
 from employees.models import Employee
@@ -9,7 +11,8 @@ class Price(models.Model):
     start_date = models.DateTimeField("Цена действительна с")
     end_date = models.DateTimeField("Цена действительна до")
     is_actual = models.BooleanField("Актуально?", default=True)
-    value = models.DecimalField("Стоимость", max_digits=7, decimal_places=2)
+    value = models.DecimalField("Стоимость", max_digits=7,
+                                decimal_places=2, )
 
     def __str__(self) -> str:
         return f'Стоимость {self.value}'
@@ -88,7 +91,7 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-
+    daily_work = models.ForeignKey('DailyWork', on_delete=models.CASCADE, related_name="quantity")
 
     class Meta:
         verbose_name = "Количество сшитой модели"
@@ -100,13 +103,15 @@ class QuantityModel(models.Model):
 
 class DailyWork(models.Model):
     employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name="Cотрудник")
-    quantity = models.ForeignKey(QuantityModel, on_delete=models.CASCADE,
-                                 verbose_name="Количество", related_name="daily_quantity")
+        Employee, on_delete=models.CASCADE, verbose_name="Cотрудник"
+    )
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
-    prepayment = models.IntegerField(default=0, verbose_name="Аванс")
-
-
+    prepayment = models.DecimalField(default=Decimal('0.00'), verbose_name="Аванс", max_digits=7, decimal_places=2)
+    daily_salary = models.DecimalField(default=Decimal('0.00'), max_digits=7, decimal_places=2,
+                                       verbose_name="Зарплата")
+    total_cost = models.DecimalField(
+        default=Decimal('0.00'), max_digits=7, decimal_places=2, verbose_name="Общая стоимость",
+    )
 
     class Meta:
         verbose_name = "Ежедневник"
@@ -125,7 +130,8 @@ class NewOrder(models.Model):
     image = models.ImageField(
         null=True,
         blank=True,
-        verbose_name="Изображение")
+        verbose_name="Изображение"
+    )
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,

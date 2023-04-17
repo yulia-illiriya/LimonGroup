@@ -1,6 +1,8 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from django.db.models.query import QuerySet
 from django.db.models import F
+from rest_framework.response import Response
+
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
@@ -61,16 +63,23 @@ class SewingModelRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 
 
-class DailyWorkListCreateAPIView(generics.ListCreateAPIView):
+class DailyWorkListAPIView(generics.ListAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
 
-    def get_queryset(self):
-        queryset: QuerySet[DailyWork] = super().get_queryset()
-        queryset = queryset.annotate(daily_salary=F("quantity__quantity") *
-                                                  F("quantity__sewing_model__labor_cost__value") - F("prepayment"))
 
-        return queryset
+class DailyWorkCreateAPIView(generics.CreateAPIView):
+    serializer_class = DailyWorkSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):

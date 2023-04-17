@@ -45,23 +45,25 @@ class QuantityModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DailyWorkSerializer(serializers.ModelSerializer):
-    daily_salary = serializers.ReadOnlyField()
+class DailyProductSewing(serializers.Serializer):
+    sewing_id = serializers.IntegerField()
+    price = serializers.IntegerField()
+    amount = serializers.IntegerField()
 
-    class Meta:
-        model = DailyWork
-        fields = ('employee',
-                  'quantity',
-                  'date',
-                  'prepayment',
-                  'daily_salary')
 
+class DailyWorkSerializer(serializers.Serializer):
+    date = serializers.DateField()
+    prepayment = serializers.IntegerField()
+    products = DailyProductSewing(many=True)
+    employee_id = serializers.IntegerField()
+
+    def save(self, **kwargs):
+        print(kwargs)
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
     class Meta:
         model = FabricCutting
         fields = '__all__'
-
 
 class RawStuffSerializer(serializers.ModelSerializer):
     class Meta:
