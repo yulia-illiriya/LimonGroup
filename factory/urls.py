@@ -5,13 +5,17 @@ from .views import OrderCreateUpdateAPIView, OrderListCreateAPIView
 urlpatterns = [
 
     path(
-        'listcreate-dailywork/',
-        views.DailyWorkListCreateAPIView.as_view(),
+        'list-dailywork/',
+        views.DailyWorkListAPIView.as_view(),
         name='list-dailywork'),
+    path(
+        'create-dailywork/',
+        views.DailyWorkCreateAPIView.as_view(),
+        name='create-dailywork'),
     path(
         'update-dailywork/<int:pk>',
         views.DailyWorkRetrieveUpdateAPIView.as_view(),
-        name='create-dailywork'),
+        name='update-dailywork'),
     path(
         'destroy-dailywork/<int:pk>/',
         views.DailyWorkRetrieveDestroyAPIView.as_view(),
@@ -102,7 +106,7 @@ urlpatterns = [
         'fabriccutting-destroy/<int:pk>/',
         views.FabricCuttingRetrieveDestroyAPIView.as_view(),
         name='fabriccutting-ret-destroy'),
-    #Order
+    # Order
     path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
     path('order-create/', OrderListCreateAPIView.as_view(), name='order'),
     # Quantity

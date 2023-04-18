@@ -5,11 +5,11 @@ from .models import (
     Order,
     NewOrder,
     DailyWork,
-    SewingModel, 
-    FabricCutting, 
-    RawStuff, 
-    Storage, 
-    Price, 
+    SewingModel,
+    FabricCutting,
+    RawStuff,
+    Storage,
+    Price,
     QuantityModel
 )
 
@@ -28,10 +28,11 @@ class SewingModelSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     sewing_model = SewingModelSerializer(many=True, read_only=True)
-        
+
     class Meta:
         model = Order
-        fields = ['data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani', 'pod_flizelin', 'sewing_model']    
+        fields = ['data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani', 'pod_flizelin',
+                  'sewing_model']
 
 
 class NewOrderSerializer(serializers.ModelSerializer):
@@ -49,7 +50,8 @@ class NewOrderSerializer(serializers.ModelSerializer):
         client, _ = Client.objects.get_or_create(full_name=client_name)
         validated_data['client_id'] = client.id
         return super().create(validated_data)
-    
+
+
 class QuantityModelSerializer(serializers.ModelSerializer):
     # sewing_model = serializers.StringRelatedField()
 
@@ -59,15 +61,11 @@ class QuantityModelSerializer(serializers.ModelSerializer):
 
 
 class DailyWorkSerializer(serializers.ModelSerializer):
-    daily_salary = serializers.ReadOnlyField()
+    employee = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = DailyWork
-        fields = ('employee',
-                  'quantity',
-                  'date',
-                  'prepayment',
-                  'daily_salary')
+        fields = '__all__'
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
