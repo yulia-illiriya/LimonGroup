@@ -59,9 +59,8 @@ class Order(models.Model):
 
 
 class SewingModel(models.Model):
-    
     """Model for sewing"""
-    
+
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,
@@ -73,7 +72,8 @@ class SewingModel(models.Model):
                                    related_name="model_labor_cost")
     client_price = models.ForeignKey(Price, on_delete=models.CASCADE, verbose_name="Цена для клиента",
                                      related_name="model_client_price")
-    order = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL, verbose_name="Заказ", related_name="sewing_model")
+    order = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL, verbose_name="Заказ",
+                              related_name="sewing_model")
 
     def __str__(self):
         return f"{self.type} {self.color} {self.material}"
@@ -104,7 +104,7 @@ class DailyWork(models.Model):
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.DecimalField(default=Decimal('0.00'), verbose_name="Аванс", max_digits=7, decimal_places=2)
     daily_salary = models.DecimalField(default=Decimal('0.00'), max_digits=7, decimal_places=2,
-                                       verbose_name="Зарплата")
+                                       verbose_name="Зарплата", )
     total_cost = models.DecimalField(
         default=Decimal('0.00'), max_digits=7, decimal_places=2, verbose_name="Общая стоимость",
     )
@@ -113,11 +113,13 @@ class DailyWork(models.Model):
         verbose_name = "Ежедневник"
         verbose_name_plural = "Ежедневники"
 
+    def __str__(self):
+        return f"{self.employee} {str(self.date)}"
+
 
 class NewOrder(models.Model):
-    
     """Pattern for new clients"""
-    
+
     price = models.DecimalField(verbose_name="Стоимость", decimal_places=2, max_digits=7)
     color = models.CharField(max_length=25, verbose_name="Цвет")
     description = models.TextField(verbose_name="Описание образца", null=True)

@@ -110,6 +110,9 @@ urlpatterns = [
     path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
     path('order-create/', OrderListCreateAPIView.as_view(), name='order'),
     # Quantity
-    path('quantity-model/', views.QuantityModelCreateView.as_view(), name="quantity_model")
+    path('quantity-create/', views.QuantityModelCreateView.as_view(), name="create-quantity"),
+    path('quantity-list/', views.QuantityModelListView.as_view(), name="quantity-list"),
+    path('quantity-update/<int:pk>', views.QuantityUpdateModelView.as_view(), name="qunatity-update"),
+    path("quantity-destroy/<int:pk>", views.QuantityDestroyModelView.as_view(), name="quantity-destroy")
 
 ]
