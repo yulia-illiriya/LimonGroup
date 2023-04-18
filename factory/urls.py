@@ -1,6 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from . import views
-from .views import OrderCreateUpdateAPIView, OrderListCreateAPIView
+from .views import OrderViewSet
+
+router = routers.DefaultRouter()
+router.register(r'order', OrderViewSet)
 
 urlpatterns = [
 
@@ -106,9 +110,15 @@ urlpatterns = [
         'fabriccutting-destroy/<int:pk>/',
         views.FabricCuttingRetrieveDestroyAPIView.as_view(),
         name='fabriccutting-ret-destroy'),
+
+    #Order
+    path('order/', include(router.urls), name='order'),
+    
+
     # Order
     path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
     path('order-create/', OrderListCreateAPIView.as_view(), name='order'),
+
     # Quantity
     path('quantity-create/', views.QuantityModelCreateView.as_view(), name="create-quantity"),
     path('quantity-list/', views.QuantityModelListView.as_view(), name="quantity-list"),

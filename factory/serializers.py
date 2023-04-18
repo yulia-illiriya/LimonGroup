@@ -24,10 +24,20 @@ class SewingModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SewingModel
         fields = "__all__"
+        
+class SewingModelDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SewingModel
+        fields = ['color', 'material', 'type', 'labor_cost', 'client_price']
 
 
 class OrderSerializer(serializers.ModelSerializer):
+
+    sewing_model = SewingModelDetailSerializer(many=True, read_only=True)
+        
+
     sewing_model = SewingModelSerializer(many=True, read_only=True)
+
 
     class Meta:
         model = Order

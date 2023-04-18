@@ -1,3 +1,8 @@
+
+from rest_framework import generics, viewsets
+from django.db.models.query import QuerySet
+from django.db.models import F
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -140,15 +145,19 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = Storage.objects.all()
     serializer_class = StorageSerializer
 
-
-class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
+class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
+# class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
+#     queryset = Order.objects.all()
+#     serializer_class = OrderSerializer
+    
 
-class OrderListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+
+# class OrderListCreateAPIView(generics.ListCreateAPIView):
+#     queryset = Order.objects.all()
+#     serializer_class = OrderSerializer
 
 
 class QuantityModelCreateView(generics.CreateAPIView):
