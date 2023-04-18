@@ -1,6 +1,11 @@
+
 from rest_framework import generics, viewsets
 from django.db.models.query import QuerySet
 from django.db.models import F
+
+from rest_framework import generics, status
+from rest_framework.response import Response
+
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
@@ -61,16 +66,14 @@ class SewingModelRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 
 
-class DailyWorkListCreateAPIView(generics.ListCreateAPIView):
+class DailyWorkListAPIView(generics.ListAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
 
-    def get_queryset(self):
-        queryset: QuerySet[DailyWork] = super().get_queryset()
-        queryset = queryset.annotate(daily_salary=F("quantity__quantity") *
-                                                  F("quantity__sewing_model__labor_cost__value") - F("prepayment"))
 
-        return queryset
+class DailyWorkCreateAPIView(generics.CreateAPIView):
+    queryset = DailyWork.objects.all()
+    serializer_class = DailyWorkSerializer
 
 
 class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
@@ -150,6 +153,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 #     queryset = Order.objects.all()
 #     serializer_class = OrderSerializer
     
+
 
 # class OrderListCreateAPIView(generics.ListCreateAPIView):
 #     queryset = Order.objects.all()
