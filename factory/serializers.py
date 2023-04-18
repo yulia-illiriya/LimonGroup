@@ -62,20 +62,22 @@ class NewOrderSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class QuantityModelSerializer(serializers.ModelSerializer):
-    # sewing_model = serializers.StringRelatedField()
-
-    class Meta:
-        model = QuantityModel
-        fields = '__all__'
-
-
 class DailyWorkSerializer(serializers.ModelSerializer):
-    employee = serializers.StringRelatedField(read_only=True)
-
     class Meta:
         model = DailyWork
         fields = '__all__'
+
+
+
+
+
+class QuantityModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuantityModel
+        fields = ('id',
+                  'sewing_model',
+                  'quantity',
+                  'daily_work')
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):

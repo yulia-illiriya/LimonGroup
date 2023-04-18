@@ -163,3 +163,18 @@ class OrderViewSet(viewsets.ModelViewSet):
 class QuantityModelCreateView(generics.CreateAPIView):
     queryset = QuantityModel.objects.all()
     serializer_class = QuantityModelSerializer
+
+
+class QuantityModelListView(generics.ListAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
+
+
+class QuantityUpdateModelView(generics.RetrieveUpdateAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
+
+
+class QuantityDestroyModelView(generics.RetrieveDestroyAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
