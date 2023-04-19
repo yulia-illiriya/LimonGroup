@@ -1,30 +1,50 @@
 from django.utils.decorators import method_decorator
 
 from rest_framework.response import Response
-from rest_framework.views import ModelViewSet
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework import status
+from djoser.views import UserViewSet as DjoserUserViewSet
 
 from drf_yasg.utils import swagger_auto_schema
 
 from accounts.models import User
-from accounts.serializers import UserSerializer
+from .serializers import UserAPISerializer, UserCreateAPISerializer
 
 
-@method_decorator(name='list', decorator=swagger_auto_schema(tags=['users']))
-@method_decorator(name='retrieve', decorator=swagger_auto_schema(tags=['users']))
-@method_decorator(name='create', decorator=swagger_auto_schema(tags=['users']))
-@method_decorator(name='update', decorator=swagger_auto_schema(tags=['users']))
-@method_decorator(name='destroy', decorator=swagger_auto_schema(tags=['users']))
-@method_decorator(name='partial_update', decorator=swagger_auto_schema(tags=['users']))
-class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class UserCreateView(DjoserUserViewSet):
+    """
+    Custom view for user registration using Djoser.
+    """
+    serializer_class = UserCreateAPISerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        user = serializer.instance
+        
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+# @method_decorator(name='list', decorator=swagger_auto_schema(tags=['users']))
+# @method_decorator(name='retrieve', decorator=swagger_auto_schema(tags=['users']))
+# @method_decorator(name='create', decorator=swagger_auto_schema(tags=['users']))
+# @method_decorator(name='update', decorator=swagger_auto_schema(tags=['users']))
+# @method_decorator(name='destroy', decorator=swagger_auto_schema(tags=['users']))
+# @method_decorator(name='partial_update', decorator=swagger_auto_schema(tags=['users']))
+# class UserViewSet(ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 
 class UserMeAPIView(RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserAPISerializer
 
     @swagger_auto_schema(tags=['users'])
     def retrieve(self, request):
