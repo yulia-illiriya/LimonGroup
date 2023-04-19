@@ -148,6 +148,10 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        return super().create(request, *args, **kwargs)
 
 # class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
 #     queryset = Order.objects.all()
