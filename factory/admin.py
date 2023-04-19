@@ -1,9 +1,5 @@
 from django.contrib import admin
 
-from django.db.models import F
-
-from .models import DailyWork, NewOrder, Price, QuantityModel, SewingModel
-
 from .models import DailyWork, NewOrder, Price, QuantityModel, SewingModel, Storage, RawStuff, FabricCutting
 
 
@@ -36,22 +32,22 @@ class QuatityInline(admin.TabularInline):
     ]
 
 
-class DailyWorkAdmin(admin.ModelAdmin):
-    list_display = [
-        'employee',
-        'date',
-        'prepayment',
-        'total_cost',
-    ]
-    inlines = [
-        QuatityInline
-    ]
-    readonly_fields = ["total_cost", "daily_salary"]
+# class DailyWorkAdmin(admin.ModelAdmin):
+#     list_display = [
+#         'employee',
+#         'date',
+#         'prepayment',
+#         'total_cost',
+#     ]
+#     inlines = [
+#         QuatityInline
+#     ]
+#     readonly_fields = ["total_cost", "daily_salary"]
+#
+#     ordering = ['date']
 
-    ordering = ['date']
 
-
-admin.site.register(DailyWork, DailyWorkAdmin)
+# admin.site.register(DailyWork, DailyWorkAdmin)
 
 
 class NewOrderAdmin(admin.ModelAdmin):

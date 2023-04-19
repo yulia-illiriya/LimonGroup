@@ -35,8 +35,6 @@ class SewingModelDetailSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     sewing_model = SewingModelDetailSerializer(many=True, read_only=True)
 
-    sewing_model = SewingModelSerializer(many=True, read_only=True)
-
     class Meta:
         model = Order
         fields = ['data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani', 'pod_flizelin',
@@ -60,19 +58,31 @@ class NewOrderSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class DailyWorkSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DailyWork
-        fields = '__all__'
-
-
 class QuantityModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuantityModel
         fields = ('id',
                   'sewing_model',
-                  'quantity',
-                  'daily_work')
+                  'quantity')
+
+
+class DailyWorkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyWork
+        fields = ('employee',
+                  'date',
+                  'prepayment',
+                  'daily_salary',
+                  'total_cost',
+                  'quantity'
+                  )
+
+    def create(self, validated_data):
+        quantity_data = validated_data.pop('quantity')
+        daily_work = DailyWork.objects.create(validated_data)
+        for data in quantity_data:
+            QuantityModel.objects.create(daily_work=daily_work, *data)
+        return daily_work
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):

@@ -87,14 +87,13 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-    daily_work = models.ForeignKey('DailyWork', on_delete=models.CASCADE, related_name="quantity")
 
     class Meta:
         verbose_name = "Количество сшитой модели"
         verbose_name_plural = "Количество сшитых моделей"
 
     def __str__(self):
-        return f"{self.sewing_model} {str(self.quantity)}"
+        return self.sewing_model
 
 
 class DailyWork(models.Model):
@@ -108,13 +107,11 @@ class DailyWork(models.Model):
     total_cost = models.DecimalField(
         default=Decimal('0.00'), max_digits=7, decimal_places=2, verbose_name="Общая стоимость",
     )
+    quantity = models.ManyToManyField(QuantityModel, verbose_name="Сшитые модели")
 
     class Meta:
         verbose_name = "Ежедневник"
         verbose_name_plural = "Ежедневники"
-
-    def __str__(self):
-        return f"{self.employee} {str(self.date)}"
 
 
 class NewOrder(models.Model):
