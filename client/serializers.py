@@ -7,12 +7,12 @@ from factory.serializers import SewingModelSerializer, OrderSerializer, NewOrder
 
 class ClientSerializer(serializers.ModelSerializer):
     order = serializers.SerializerMethodField()
-    new_pattern = NewOrderSerializer(many=True, read_only=True)  
-    
+    new_pattern = NewOrderSerializer(many=True, read_only=True)
+
     class Meta:
         model = Client
         fields = ['full_name', 'contacts', 'address', 'is_new', 'created_at', 'order', 'new_pattern']
-    
+
     def get_order(self, obj):
         orders = Order.objects.filter(client=obj)
         serialized_order = OrderSerializer(orders, many=True).data
@@ -24,9 +24,10 @@ class ClientSerializer(serializers.ModelSerializer):
                 'data_zakup': order['data_zakup'],
                 'raskroi_tkani': order['raskroi_tkani'],
                 'pod_flizelin': order['pod_flizelin'],
-                'sewing_model': order['sewing_model']              
+                'sewing_model': order['sewing_model']
             })
         return result
+
 
 class CatalogCategorySerializer(serializers.ModelSerializer):
     class Meta:

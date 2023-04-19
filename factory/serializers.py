@@ -24,7 +24,8 @@ class SewingModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SewingModel
         fields = "__all__"
-        
+
+
 class SewingModelDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = SewingModel
@@ -32,12 +33,9 @@ class SewingModelDetailSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-
     sewing_model = SewingModelDetailSerializer(many=True, read_only=True)
-        
 
     sewing_model = SewingModelSerializer(many=True, read_only=True)
-
 
     class Meta:
         model = Order
@@ -66,9 +64,6 @@ class DailyWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyWork
         fields = '__all__'
-
-
-
 
 
 class QuantityModelSerializer(serializers.ModelSerializer):
