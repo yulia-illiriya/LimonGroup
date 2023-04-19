@@ -88,10 +88,8 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-<<<<<<< HEAD
-=======
-    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True, related_name="quantity")
->>>>>>> 7c8006da84bb32770c5b1603d4363539684e6774
+
+
 
     class Meta:
         verbose_name = "Количество сшитой модели"

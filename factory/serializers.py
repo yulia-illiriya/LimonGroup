@@ -15,6 +15,7 @@ from .models import (
 
 from factory.services import CustomDateField
 
+
 class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
@@ -22,9 +23,8 @@ class PriceSerializer(serializers.ModelSerializer):
 
 
 class SewingModelSerializer(serializers.ModelSerializer):
-    
     """Позволяет сразу создать или подтянуть из базы данных цену """
-    
+
     labor_cost = PriceSerializer()
     client_price = PriceSerializer()
 
@@ -32,9 +32,6 @@ class SewingModelSerializer(serializers.ModelSerializer):
         model = SewingModel
         fields = "__all__"
 
-<<<<<<< HEAD
-
-=======
     def create(self, validated_data):
         labor_cost_data = validated_data.pop('labor_cost', None)
         client_price_data = validated_data.pop('client_price', None)
@@ -51,8 +48,8 @@ class SewingModelSerializer(serializers.ModelSerializer):
 
         sewing_model = SewingModel.objects.create(**validated_data)
         return sewing_model
-        
->>>>>>> 7c8006da84bb32770c5b1603d4363539684e6774
+
+
 class SewingModelDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = SewingModel
@@ -60,23 +57,20 @@ class SewingModelDetailSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-<<<<<<< HEAD
     sewing_model = SewingModelDetailSerializer(many=True, read_only=True)
-=======
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
-    sewing_model = SewingModelSerializer(many=True, read_only=True)
->>>>>>> 7c8006da84bb32770c5b1603d4363539684e6774
 
     class Meta:
         model = Order
-        fields = ['client', 'data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani', 'pod_flizelin', 'sewing_model']
+        fields = ['client', 'data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani',
+                  'pod_flizelin', 'sewing_model']
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         client_name = instance.client.full_name
         ret['client'] = client_name
         return ret
-    
+
     def create(self, validated_data):
         sewing_models = validated_data.pop('sewing_model', [])
         client = validated_data.pop('client')
@@ -85,9 +79,8 @@ class OrderSerializer(serializers.ModelSerializer):
         for sewing_model_data in sewing_models:
             sewing_model = SewingModel(order=order, **sewing_model_data)
             sewing_model.save()
-        
-        return order
 
+        return order
 
 
 class NewOrderSerializer(serializers.ModelSerializer):
@@ -126,12 +119,12 @@ class DailyWorkSerializer(serializers.ModelSerializer):
                   'quantity'
                   )
 
-    def create(self, validated_data):
-        quantity_data = validated_data.pop('quantity')
-        daily_work = DailyWork.objects.create(validated_data)
-        for data in quantity_data:
-            QuantityModel.objects.create(daily_work=daily_work, *data)
-        return daily_work
+    # def create(self, validated_data):
+    #     quantity_data = validated_data.pop('quantity')
+    #     daily_work = DailyWork.objects.create(validated_data)
+    #     for data in quantity_data:
+    #         QuantityModel.objects.create(daily_work=daily_work, *data)
+    #     return daily_work
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):

@@ -112,20 +112,19 @@ urlpatterns = [
         name='fabriccutting-ret-destroy'),
 
     #Order
-    path('order/', include(router.urls), name='order'),
+    path('order/', include(router.urls), name='order'),]
     
-<<<<<<< HEAD
+
 
     # # Order
     # path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
     # path('order-create/', OrderListCreateAPIView.as_view(), name='order'),
 
-=======
->>>>>>> 7c8006da84bb32770c5b1603d4363539684e6774
-    # Quantity
-    path('quantity-create/', views.QuantityModelCreateView.as_view(), name="create-quantity"),
-    path('quantity-list/', views.QuantityModelListView.as_view(), name="quantity-list"),
-    path('quantity-update/<int:pk>', views.QuantityUpdateModelView.as_view(), name="qunatity-update"),
-    path("quantity-destroy/<int:pk>", views.QuantityDestroyModelView.as_view(), name="quantity-destroy")
 
-]
+    # Quantity
+    # path('quantity-create/', views.QuantityModelCreateView.as_view(), name="create-quantity"),
+    # path('quantity-list/', views.QuantityModelListView.as_view(), name="quantity-list"),
+    # path('quantity-update/<int:pk>', views.QuantityUpdateModelView.as_view(), name="qunatity-update"),
+    # path("quantity-destroy/<int:pk>", views.QuantityDestroyModelView.as_view(), name="quantity-destroy")
+
+
