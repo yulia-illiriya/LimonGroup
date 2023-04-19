@@ -31,7 +31,9 @@ INSTALLED_APPS = [
 
     # rest
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_yasg',
+    'djoser',
 
     # apps
     'factory',
@@ -125,9 +127,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        ),
     'DATETIME_FORMAT': '%d.%m.%Y %H:%M:%S',
     'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
     'DATE_FORMAT': '%d.%m.%Y',
 }
 
 AUTH_USER_MODEL = 'accounts.User'
+
+DJOSER = {
+    'USER_MODEL': 'accounts.User',  
+    'SERIALIZERS': {
+        'user': 'accounts.serializers.UserAPISerializer',
+        'user_create': 'accounts.serializers.UserCreateAPISerializer',
+        
+}
+}
