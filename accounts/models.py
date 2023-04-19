@@ -7,52 +7,35 @@ from django.contrib.auth.models import PermissionsMixin
 from accounts.managers import UserManager
 
 
-class UserRole(models.Model):
-    name = models.CharField(max_length=20, verbose_name='Роль пользователя:')
-
-    def __str__(self) -> str:
-        return self.name
-
-
 class User(AbstractBaseUser, PermissionsMixin):
-    # user_role = models.ForeignKey(UserRole, verbose_name='Роль пользователя:', on_delete=models.CASCADE)
+    ROLE_CHOICES = (
+        ('admin', 'Администратор'),
+        ('purchaser', 'Закупщик'),
+        ('sales_manager', 'Менеджер по продажам'),
+        ('technologist', 'Технолог'),
+        ('accountant', 'Бухгалтер'),
+        ('assistent', 'Ассистент')
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)    
     email = models.EmailField(
         verbose_name="Email",
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(max_length=255, verbose_name='Имя')
-    last_name = models.CharField(max_length=255, verbose_name='Фамилия')
+    username = models.CharField(max_length=255, verbose_name='Имя', unique=True)
     date_created = models.DateField(auto_now_add=True)
-    date_updated = models.DateField(auto_now=True)
-    phone_number = models.CharField(
-        validators=[
-            RegexValidator(
-                regex='^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$',
-                message='phone number must be digits',
-                code='invalid phone number')],
-        max_length=15,
-        verbose_name='Контакты')
-    is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    USERNAME_FIELD = "username"
 
-    def str(self):
-        return self.email
-
-    def has_module_perms(self, app_label):
-        return self.is_superuser
-
-    @property
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+    def __str__(self):
+        return self.username
 
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+

@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import datetime, timedelta
 
 from django.db import models
 from client.models import Client
@@ -8,8 +9,8 @@ from employees.models import Employee
 class Price(models.Model):
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
     updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
-    start_date = models.DateTimeField("Цена действительна с")
-    end_date = models.DateTimeField("Цена действительна до")
+    start_date = models.DateTimeField("Цена действительна с", default=datetime.now)
+    end_date = models.DateTimeField("Цена действительна до", default=lambda: datetime.now() + timedelta(days=30))
     is_actual = models.BooleanField("Актуально?", default=True)
     value = models.DecimalField("Стоимость", max_digits=7,
                                 decimal_places=2, )
@@ -20,7 +21,7 @@ class Price(models.Model):
     class Meta:
         verbose_name = "Стоимость"
         verbose_name_plural = "Цены"
-        ordering = ['updated_at']
+        ordering = ['value']
 
 
 class Order(models.Model):
@@ -87,7 +88,7 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-    daily_work = models.ForeignKey('DailyWork', on_delete=models.CASCADE, related_name="quantity")
+    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True, related_name="quantity")
 
     class Meta:
         verbose_name = "Количество сшитой модели"
