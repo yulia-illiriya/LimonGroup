@@ -14,7 +14,7 @@ from .models import (
     QuantityModel
 )
 
-from factory.services import CustomDateField
+
 
 class PriceSerializer(serializers.ModelSerializer):
     end_date = serializers.DateTimeField(default=datetime.now() + timedelta(days=30))
@@ -112,12 +112,12 @@ class DailyWorkSerializer(serializers.ModelSerializer):
 
 
 class QuantityModelSerializer(serializers.ModelSerializer):
+    quantity_models = SewingModelSerializer()
+    numbers_for_account = DailyWorkSerializer()
+    
     class Meta:
         model = QuantityModel
-        fields = ('id',
-                  'sewing_model',
-                  'quantity',
-                  'daily_work')
+        fields = ('id', 'quantity_models', 'quantity', 'numbers_for_account')
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
