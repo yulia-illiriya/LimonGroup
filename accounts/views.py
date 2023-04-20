@@ -26,9 +26,8 @@ class UserCreateView(DjoserUserViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         user = serializer.instance
-        
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # @method_decorator(name='list', decorator=swagger_auto_schema(tags=['users']))

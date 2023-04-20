@@ -1,4 +1,3 @@
-
 from rest_framework import generics, viewsets
 from django.db.models.query import QuerySet
 from django.db.models import F
@@ -8,14 +7,14 @@ from rest_framework.response import Response
 
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
-                           DailyWorkSerializer,
+                          DailyWorkSerializer,
                           NewOrderSerializer,
                           PriceSerializer,
                           FabricCuttingSerializer,
                           RawStuffSerializer,
-                          StorageSerializer, QuantityModelSerializer)
+                          StorageSerializer, DailyWorkDetailSerializer)
 from .models import (Order, SewingModel, DailyWork,
-                     NewOrder, Price, FabricCutting, RawStuff, Storage, QuantityModel)
+                     NewOrder, Price, FabricCutting, RawStuff, Storage)
 
 
 class PriceListCreateAPIView(generics.ListCreateAPIView):
@@ -68,7 +67,7 @@ sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 
 class DailyWorkListAPIView(generics.ListAPIView):
     queryset = DailyWork.objects.all()
-    serializer_class = DailyWorkSerializer
+    serializer_class = DailyWorkDetailSerializer
 
 
 class DailyWorkCreateAPIView(generics.CreateAPIView):
@@ -78,7 +77,7 @@ class DailyWorkCreateAPIView(generics.CreateAPIView):
 
 class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = DailyWork.objects.all()
-    serializer_class = DailyWorkSerializer
+    serializer_class = DailyWorkDetailSerializer
 
 
 class DailyWorkRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
@@ -145,10 +144,11 @@ class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = Storage.objects.all()
     serializer_class = StorageSerializer
 
+
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    
+
     def create(self, request, *args, **kwargs):
         print(request.data)
         return super().create(request, *args, **kwargs)
@@ -156,29 +156,8 @@ class OrderViewSet(viewsets.ModelViewSet):
 # class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
 #     queryset = Order.objects.all()
 #     serializer_class = OrderSerializer
-    
 
 
 # class OrderListCreateAPIView(generics.ListCreateAPIView):
 #     queryset = Order.objects.all()
 #     serializer_class = OrderSerializer
-
-
-class QuantityModelCreateView(generics.CreateAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
-
-
-class QuantityModelListView(generics.ListAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
-
-
-class QuantityUpdateModelView(generics.RetrieveUpdateAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
-
-
-class QuantityDestroyModelView(generics.RetrieveDestroyAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
