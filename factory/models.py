@@ -10,13 +10,15 @@ class Price(models.Model):
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
     updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
     start_date = models.DateTimeField("Цена действительна с", default=datetime.now)
-    end_date = models.DateTimeField("Цена действительна до", default=lambda: datetime.now() + timedelta(days=30))
+    end_date = models.DateTimeField("Цена действительна до", null=True)
     is_actual = models.BooleanField("Актуально?", default=True)
     value = models.DecimalField("Стоимость", max_digits=7,
                                 decimal_places=2, )
 
     def __str__(self) -> str:
         return f'Стоимость {self.value}'
+    
+    
 
     class Meta:
         verbose_name = "Стоимость"
