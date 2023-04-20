@@ -8,13 +8,13 @@ from .serializers import EmployeeSerializer, PositionSerializer
 class PositionView(viewsets.ModelViewSet):
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
-    permission_classes = [IsAdminOrReadOnly,]
+    # permission_classes = [IsAdminOrReadOnly,]
     
     
 class EmployeeView(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    permission_classes = [IsAuthenticated, IsAdminOrReadOnly,]
+    # permission_classes = [IsAuthenticated, IsAdminOrReadOnly,]
           
 
 # class EmployeeDetailUpdateView(generics.RetrieveUpdateAPIView):

@@ -17,8 +17,6 @@ class Price(models.Model):
 
     def __str__(self) -> str:
         return f'Стоимость {self.value}'
-    
-    
 
     class Meta:
         verbose_name = "Стоимость"
@@ -63,7 +61,7 @@ class Order(models.Model):
 
 class SewingModel(models.Model):
     """Model for sewing"""
-
+    articul = models.CharField(max_length=20, unique=True)
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,
@@ -79,7 +77,7 @@ class SewingModel(models.Model):
                               related_name="sewing_model")
 
     def __str__(self):
-        return f"{self.type} {self.color} {self.material}"
+        return self.articul
 
     class Meta:
         verbose_name = 'Модель'
@@ -90,14 +88,13 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity_models")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True, related_name="quantity")
 
     class Meta:
         verbose_name = "Количество сшитой модели"
         verbose_name_plural = "Количество сшитых моделей"
 
     def __str__(self):
-        return f"{self.sewing_model} {str(self.quantity)}"
+        return self.sewing_model
 
 
 class DailyWork(models.Model):
@@ -108,16 +105,16 @@ class DailyWork(models.Model):
     prepayment = models.DecimalField(default=Decimal('0.00'), verbose_name="Аванс", max_digits=7, decimal_places=2)
     daily_salary = models.DecimalField(default=Decimal('0.00'), max_digits=7, decimal_places=2,
                                        verbose_name="Зарплата", )
-    total_cost = models.DecimalField(
-        default=Decimal('0.00'), max_digits=7, decimal_places=2, verbose_name="Общая стоимость",
-    )
 
     class Meta:
         verbose_name = "Ежедневник"
         verbose_name_plural = "Ежедневники"
+        unique_together = ['employee', 'date']
 
-    def __str__(self):
-        return f"{self.employee} {str(self.date)}"
+
+class QuantityModelDailyWork(models.Model):
+    daily_work = models.ForeignKey(DailyWork, on_delete=models.CASCADE, verbose_name="Ежедневник")
+    quantity = models.ForeignKey(QuantityModel, on_delete=models.CASCADE, verbose_name="Количество сшитых моделей")
 
 
 class NewOrder(models.Model):
