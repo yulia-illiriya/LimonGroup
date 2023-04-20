@@ -4,6 +4,9 @@ from django.db.models import F
 
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .services import get_production
 
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
@@ -152,6 +155,16 @@ class OrderViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print(request.data)
         return super().create(request, *args, **kwargs)
+    
+class ProductionWork(APIView):
+    def get(self, request):
+        date = request.data.get('date')
+        if not date:
+            return Response({'error': 'Вы не указали дату'}, status=400)
+
+        summary = get_production(date)
+
+        return Response(summary)
 
 # class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
 #     queryset = Order.objects.all()

@@ -86,7 +86,7 @@ class SewingModel(models.Model):
 
 class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
-                                     related_name="quantity")
+                                     related_name="quantity_models")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
 
     class Meta:

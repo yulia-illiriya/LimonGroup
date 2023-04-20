@@ -16,7 +16,7 @@ from .models import (
     QuantityModelDailyWork, Employee
 )
 
-from factory.services import CustomDateField
+
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -156,6 +156,7 @@ class EmployeeStringSerializer(serializers.ModelSerializer):
 class DailyWorkDetailSerializer(serializers.ModelSerializer):
     employee = EmployeeStringSerializer()
 
+<<<<<<< HEAD
     class Meta:
         model = DailyWork
         fields = (
@@ -165,6 +166,15 @@ class DailyWorkDetailSerializer(serializers.ModelSerializer):
             'daily_salary',
 
         )
+=======
+class QuantityModelSerializer(serializers.ModelSerializer):
+    quantity_models = SewingModelSerializer()
+    numbers_for_account = DailyWorkSerializer()
+    
+    class Meta:
+        model = QuantityModel
+        fields = ('id', 'quantity_models', 'quantity', 'numbers_for_account')
+>>>>>>> d7e662280d5a1e8f8e03b075cf6286a2cfd745b3
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
