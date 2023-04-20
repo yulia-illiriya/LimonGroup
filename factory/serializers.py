@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from rest_framework import serializers
 
 from .models import (
@@ -17,10 +18,12 @@ from factory.services import CustomDateField
 
 
 class PriceSerializer(serializers.ModelSerializer):
+    end_date = serializers.DateTimeField(default=datetime.now() + timedelta(days=30))
+
     class Meta:
         model = Price
-        fields = "__all__"
-
+        fields = ('created_at', 'updated_at', 'start_date', 'end_date', 'is_actual', 'value')
+    
 
 class SewingModelSerializer(serializers.ModelSerializer):
     """Позволяет сразу создать или подтянуть из базы данных цену """
