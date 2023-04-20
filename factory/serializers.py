@@ -40,7 +40,6 @@ class SewingModelSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Поле labor_cost обязательно")
         labor_cost, _ = Price.objects.get_or_create(**labor_cost_data)
         validated_data['labor_cost'] = labor_cost
-
         if not client_price_data:
             raise serializers.ValidationError("Поле client_price обязательно")
         client_price, _ = Price.objects.get_or_create(**client_price_data)
@@ -111,13 +110,7 @@ class QuantityModelSerializer(serializers.ModelSerializer):
 class DailyWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyWork
-        fields = ('employee',
-                  'date',
-                  'prepayment',
-                  'daily_salary',
-                  'total_cost',
-                  'quantity'
-                  )
+        fields = '__all__'
 
     # def create(self, validated_data):
     #     quantity_data = validated_data.pop('quantity')

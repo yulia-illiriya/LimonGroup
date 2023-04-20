@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
-                          DailyWorkSerializer,
+                           DailyWorkSerializer,
                           NewOrderSerializer,
                           PriceSerializer,
                           FabricCuttingSerializer,
