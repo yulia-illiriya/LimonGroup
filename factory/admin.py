@@ -2,16 +2,14 @@ from django.contrib import admin
 
 from django.db.models import F
 
-from .models import DailyWork, NewOrder, Price, QuantityModel, SewingModel
-
 from .models import DailyWork, NewOrder, Price, QuantityModel, SewingModel, Storage, RawStuff, FabricCutting
 
 
-class QuantityModelAdmin(admin.ModelAdmin):
-    list_display = ['sewing_model', 'quantity']
+# class QuantityModelAdmin(admin.ModelAdmin):
+#     list_display = ['sewing_model', 'quantity']
 
 
-admin.site.register(QuantityModel, QuantityModelAdmin)
+# admin.site.register(QuantityModel, QuantityModelAdmin)
 
 
 class PriceAdmin(admin.ModelAdmin):
@@ -28,30 +26,30 @@ class PriceAdmin(admin.ModelAdmin):
 admin.site.register(Price, PriceAdmin)
 
 
-class QuatityInline(admin.TabularInline):
-    model = QuantityModel
-    fields = [
-        "sewing_model",
-        "quantity"
-    ]
+# class QuatityInline(admin.TabularInline):
+#     model = QuantityModel
+#     fields = [
+#         "sewing_model",
+#         "quantity"
+#     ]
 
 
-class DailyWorkAdmin(admin.ModelAdmin):
-    list_display = [
-        'employee',
-        'date',
-        'prepayment',
-        'total_cost',
-    ]
-    inlines = [
-        QuatityInline
-    ]
-    readonly_fields = ["total_cost", "daily_salary"]
+# class DailyWorkAdmin(admin.ModelAdmin):
+#     list_display = [
+#         'employee',
+#         'date',
+#         'prepayment',
+#         'total_cost',
+#     ]
+#     inlines = [
+#         QuatityInline
+#     ]
+#     readonly_fields = ["total_cost", "daily_salary"]
 
-    ordering = ['date']
+#     ordering = ['date']
 
 
-admin.site.register(DailyWork, DailyWorkAdmin)
+# admin.site.register(DailyWork, DailyWorkAdmin)
 
 
 class NewOrderAdmin(admin.ModelAdmin):

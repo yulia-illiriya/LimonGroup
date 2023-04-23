@@ -1,10 +1,10 @@
 from decimal import Decimal
-from django.db.models import Sum
+from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 from rest_framework.views import APIView
 from rest_framework import serializers
 from rest_framework.response import Response
 from .models import DailyWork, SewingModel, QuantityModel
-from .serializers import QuantityModelSerializer
+
 
 
 class CustomDateField(serializers.DateField):
@@ -44,3 +44,19 @@ def get_production(date):
     })
 
     return summary
+
+
+def update_daily_salary(daily_work):
+    labor_costs = QuantityModel.objects.filter(daily_work=daily_work).annotate(
+        labor_cost=Sum(ExpressionWrapper(
+            F('quantity') * F('sewing_model__labor_cost__value'),
+            output_field=DecimalField()
+        )))
+    total_labor_cost = labor_costs.aggregate(Sum('labor_cost'))['labor_cost__sum'] or Decimal('0.00')
+
+    employee_salary = daily_work.employee.salary
+
+    daily_salary = employee_salary + total_labor_cost - daily_work.prepayment
+
+    daily_work.daily_salary = daily_salary
+    daily_work.save()

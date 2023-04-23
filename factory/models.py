@@ -62,6 +62,7 @@ class Order(models.Model):
 
 
 class SewingModel(models.Model):
+    
     """Model for sewing"""
 
     color = models.CharField(max_length=50, verbose_name='Цвет')
@@ -90,7 +91,7 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity_models")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True, related_name="quantity")
+    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True, related_name="numbers_for_account")
 
     class Meta:
         verbose_name = "Количество сшитой модели"
@@ -107,10 +108,9 @@ class DailyWork(models.Model):
     date = models.DateField(auto_now_add=True, verbose_name="Дата")
     prepayment = models.DecimalField(default=Decimal('0.00'), verbose_name="Аванс", max_digits=7, decimal_places=2)
     daily_salary = models.DecimalField(default=Decimal('0.00'), max_digits=7, decimal_places=2,
-                                       verbose_name="Зарплата", )
-    total_cost = models.DecimalField(
-        default=Decimal('0.00'), max_digits=7, decimal_places=2, verbose_name="Общая стоимость",
-    )
+                                       verbose_name="Итоговая выплата за день с вычетом аванса", )
+    sewing_models = models.ManyToManyField(SewingModel, through='QuantityModel', related_name='daily_works')
+    
 
     class Meta:
         verbose_name = "Ежедневник"
@@ -121,6 +121,7 @@ class DailyWork(models.Model):
 
 
 class NewOrder(models.Model):
+    
     """Pattern for new clients"""
 
     price = models.DecimalField(verbose_name="Стоимость", decimal_places=2, max_digits=7)

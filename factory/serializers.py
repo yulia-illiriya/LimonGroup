@@ -1,5 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+from decimal import Decimal
+from django.db.models import Sum, F
 from rest_framework import serializers
+from .services import update_daily_salary
 
 from .models import (
     Client,
@@ -13,6 +16,7 @@ from .models import (
     Price,
     QuantityModel
 )
+from employees.models import Employee
 
 
 
@@ -64,7 +68,16 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['client', 'data_poluchenia', 'quantity_zayav', 'quantity_fact', 'data_zakup', 'raskroi_tkani', 'pod_flizelin', 'sewing_model']
+        fields = [
+            'client', 
+            'data_poluchenia', 
+            'quantity_zayav', 
+            'quantity_fact', 
+            'data_zakup', 
+            'raskroi_tkani', 
+            'pod_flizelin', 
+            'sewing_model'
+            ]
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
@@ -84,7 +97,6 @@ class OrderSerializer(serializers.ModelSerializer):
         return order
 
 
-
 class NewOrderSerializer(serializers.ModelSerializer):
     client_name = serializers.SerializerMethodField()
 
@@ -100,24 +112,88 @@ class NewOrderSerializer(serializers.ModelSerializer):
         client, _ = Client.objects.get_or_create(full_name=client_name)
         validated_data['client_id'] = client.id
         return super().create(validated_data)
+    
+    
+class QuantityModelSerializer(serializers.ModelSerializer):
+    
+    sewing_model = serializers.PrimaryKeyRelatedField(queryset=SewingModel.objects.all())
+        
+    class Meta:
+        model = QuantityModel
+        fields = ('sewing_model', 'quantity')
+         
+    def create(self, validated_data):
+        print(validated_data)        
+        sewing_model_id = validated_data.pop('sewing_model')
+        sewing_model = SewingModel.objects.get(pk=sewing_model_id)
+        validated_data['sewing_model'] = sewing_model
+        return super().create(validated_data)
 
 
 class DailyWorkSerializer(serializers.ModelSerializer):
+    employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
+    # daily_salary = serializers.DecimalField(max_digits=7, decimal_places=2)
+    sewing_models = QuantityModelSerializer(source='numbers_for_account', many=True)
+
     class Meta:
         model = DailyWork
-        fields = '__all__'
-
-
-
-
-
-class QuantityModelSerializer(serializers.ModelSerializer):
-    quantity_models = SewingModelSerializer()
-    numbers_for_account = DailyWorkSerializer()
+        fields = ('id', 'employee', 'date', 'prepayment', 'daily_salary', 'sewing_models')
+         
+    def create(self, validated_data):
+        sewing_models_data = validated_data.pop('numbers_for_account')
+        today = date.today()
+        employee = validated_data['employee']
+        daily_work, _ = DailyWork.objects.get_or_create(employee=employee, date=today, defaults=validated_data)
+        
+        quantity_models = []       
+        for i in sewing_models_data:
+            print(sewing_models_data)
+            sewing_model_str =str(i['sewing_model']).split(' ')            
+            quantity = i['quantity']
+            
+            sewing_model = SewingModel.objects.get(type=sewing_model_str[0], color=sewing_model_str[1], material=sewing_model_str[2])
+            print(sewing_model)
+            quantity_models.append(QuantityModel(daily_work=daily_work, sewing_model=sewing_model, quantity=quantity))
+            
+        QuantityModel.objects.bulk_create(quantity_models)
+        
+        update_daily_salary(daily_work)
+              
+        return daily_work
     
-    class Meta:
-        model = QuantityModel
-        fields = ('id', 'quantity_models', 'quantity', 'numbers_for_account')
+    def update(self, instance, validated_data):
+        # Обработка обновления вложенных полей sewing_models
+        sewing_models_data = validated_data.pop('numbers_for_account', None)
+        if sewing_models_data is not None:
+            instance.numbers_for_account.all().delete()  # Удаление всех связанных объектов QuantityModel
+            quantity_models = []
+            for i in sewing_models_data:
+                sewing_model_str =str(i['sewing_model']).split(' ')            
+                quantity = i['quantity']
+                sewing_model = SewingModel.objects.get(type=sewing_model_str[0], color=sewing_model_str[1], material=sewing_model_str[2])
+                quantity_models.append(QuantityModel(daily_work=instance, sewing_model=sewing_model, quantity=quantity))
+            QuantityModel.objects.bulk_create(quantity_models)
+
+        # Обновление остальных полей модели DailyWork
+        instance.employee = validated_data.get('employee', instance.employee)
+        instance.date = validated_data.get('date', instance.date)
+        instance.prepayment = validated_data.get('prepayment', instance.prepayment)
+        instance.daily_salary = validated_data.get('daily_salary', instance.daily_salary)
+        instance.save()
+
+        update_daily_salary(instance)  # Вызов функции update_daily_salary после обновления объекта DailyWork
+        return instance
+
+      
+    # def to_representation(self, instance):
+    #     ret = super().to_representation(instance)
+    #     ret['daily_salary'] = instance.daily_salary
+    #     return ret    
+
+    
+
+
+
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
