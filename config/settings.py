@@ -131,8 +131,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         ),
     'DATETIME_FORMAT': '%d.%m.%Y %H:%M:%S',
-    'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
-    'DATE_FORMAT': '%d.%m.%Y',
+    'DATE_INPUT_FORMATS': ['%d.%m.%Y', '%Y-%m-%d',
+                           '%d.%m.%Y', '%m/%d/%Y',
+                           '%m/%d/%y',],
+    'DATE_FORMAT': '%d.%m.%Y',#DATE_INPUT_FORMATS = [    '%Y-%m-%d',       # '2022-04-25'    '%d.%m.%Y',       # '25.04.2022'    '%m/%d/%Y',       # '04/25/2022'    '%m/%d/%y',       # '04/25/22']
+
 }
 
 AUTH_USER_MODEL = 'accounts.User'

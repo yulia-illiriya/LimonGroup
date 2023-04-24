@@ -257,6 +257,7 @@ class DailyWorkDetailSerializer(serializers.ModelSerializer):
 
         )
 
+
 class QuantityModelSerializer(serializers.ModelSerializer):
     quantity_models = SewingModelSerializer()
     numbers_for_account = DailyWorkSerializer()
@@ -264,7 +265,6 @@ class QuantityModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuantityModel
         fields = ('id', 'quantity_models', 'quantity', 'numbers_for_account')
-
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):

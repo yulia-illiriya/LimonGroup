@@ -106,47 +106,17 @@ class NewOrderRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     serializer_class = NewOrderSerializer
 
 
-class FabricCuttingListCreateAPIView(generics.ListCreateAPIView):
+class FabricCuttingViewSet(viewsets.ModelViewSet):
     queryset = FabricCutting.objects.all()
     serializer_class = FabricCuttingSerializer
 
 
-class FabricCuttingRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = FabricCutting.objects.all()
-    serializer_class = FabricCuttingSerializer
-
-
-class FabricCuttingRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
-    queryset = NewOrder.objects.all()
-    serializer_class = FabricCuttingSerializer
-
-
-class RawStuffListCreateAPIView(generics.ListCreateAPIView):
+class RawStuffViewSet(viewsets.ModelViewSet):
     queryset = RawStuff.objects.all()
     serializer_class = RawStuffSerializer
 
 
-class RawStuffRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = RawStuff.objects.all()
-    serializer_class = RawStuffSerializer
-
-
-class RawStuffRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
-    queryset = RawStuff.objects.all()
-    serializer_class = FabricCuttingSerializer
-
-
-class StorageListAPIView(generics.ListCreateAPIView):
-    queryset = Storage.objects.all()
-    serializer_class = StorageSerializer
-
-
-class StorageRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Storage.objects.all()
-    serializer_class = StorageSerializer
-
-
-class StorageRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+class StorageViewSet(viewsets.ModelViewSet):
     queryset = Storage.objects.all()
     serializer_class = StorageSerializer
 
@@ -158,7 +128,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print(request.data)
         return super().create(request, *args, **kwargs)
-    
+
 class ProductionWork(APIView):
     def get(self, request):
         date = request.data.get('date')
