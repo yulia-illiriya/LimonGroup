@@ -70,9 +70,8 @@ sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 
 
 class DailyWorkListAPIView(generics.ListCreateAPIView):
-class DailyWorkListAPIView(generics.ListAPIView):
     queryset = DailyWork.objects.all()
-    serializer_class = DailyWorkDetailSerializer
+    serializer_class =  DailyWorkSerializer
 
 
 class DailyWorkCreateAPIView(generics.CreateAPIView):
@@ -170,24 +169,6 @@ class ProductionWork(APIView):
 
         return Response(summary)
 
-class QuantityModelCreateView(generics.CreateAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
-
-
-class QuantityModelListView(generics.ListAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
-
-
-class QuantityUpdateModelView(generics.RetrieveUpdateAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
-
-
-class QuantityDestroyModelView(generics.RetrieveDestroyAPIView):
-    queryset = QuantityModel.objects.all()
-    serializer_class = QuantityModelSerializer
 
 # class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
 #     queryset = Order.objects.all()

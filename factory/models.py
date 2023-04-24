@@ -110,8 +110,6 @@ class DailyWork(models.Model):
     sewing_models = models.ManyToManyField(SewingModel, through='QuantityModel', related_name='daily_works')
     
 
-                                       verbose_name="Зарплата", )
-
     class Meta:
         verbose_name = "Ежедневник"
         verbose_name_plural = "Ежедневники"
