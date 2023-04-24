@@ -1,6 +1,7 @@
 from rest_framework import generics, viewsets
 from django.db.models.query import QuerySet
-from django.db.models import F
+from decimal import Decimal
+from django.db.models import F, Sum
 
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -68,6 +69,7 @@ class SewingModelRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 sewingModel_ret_destroy = SewingModelRetrieveDestroyAPIView.as_view()
 
 
+class DailyWorkListAPIView(generics.ListCreateAPIView):
 class DailyWorkListAPIView(generics.ListAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkDetailSerializer
@@ -76,9 +78,11 @@ class DailyWorkListAPIView(generics.ListAPIView):
 class DailyWorkCreateAPIView(generics.CreateAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
+    ordering_fields = ['id'] 
+    
 
 
-class DailyWorkRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+class DailyWorkCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkDetailSerializer
 
@@ -166,6 +170,25 @@ class ProductionWork(APIView):
 
         return Response(summary)
 
+class QuantityModelCreateView(generics.CreateAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
+
+
+class QuantityModelListView(generics.ListAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
+
+
+class QuantityUpdateModelView(generics.RetrieveUpdateAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
+
+
+class QuantityDestroyModelView(generics.RetrieveDestroyAPIView):
+    queryset = QuantityModel.objects.all()
+    serializer_class = QuantityModelSerializer
+
 # class OrderCreateUpdateAPIView(generics.RetrieveUpdateAPIView):
 #     queryset = Order.objects.all()
 #     serializer_class = OrderSerializer
@@ -174,3 +197,4 @@ class ProductionWork(APIView):
 # class OrderListCreateAPIView(generics.ListCreateAPIView):
 #     queryset = Order.objects.all()
 #     serializer_class = OrderSerializer
+

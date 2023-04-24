@@ -13,13 +13,9 @@ urlpatterns = [
         views.DailyWorkListAPIView.as_view(),
         name='list-dailywork'),
     path(
-        'create-dailywork/',
-        views.DailyWorkCreateAPIView.as_view(),
-        name='create-dailywork'),
-    path(
-        'update-dailywork/<int:pk>',
-        views.DailyWorkRetrieveUpdateAPIView.as_view(),
-        name='update-dailywork'),
+        'create-dailywork/<int:pk>/',
+        views.DailyWorkCreateUpdateAPIView.as_view(),
+        name='create-update-dailywork'),
     path(
         'destroy-dailywork/<int:pk>/',
         views.DailyWorkRetrieveDestroyAPIView.as_view(),
@@ -112,19 +108,22 @@ urlpatterns = [
         name='fabriccutting-ret-destroy'),
 
     #Order
+
+    path('order/', include(router.urls), name='order'),    
+  
+
     path('order/', include(router.urls), name='order'),]
     
-<<<<<<< HEAD
-=======
+
     # Quantity
     path('quantity-create/', views.QuantityModelCreateView.as_view(), name="create-quantity"),
     path('quantity-list/', views.QuantityModelListView.as_view(), name="quantity-list"),
     path('quantity-update/<int:pk>', views.QuantityUpdateModelView.as_view(), name="qunatity-update"),
     path("quantity-destroy/<int:pk>", views.QuantityDestroyModelView.as_view(), name="quantity-destroy"),
     
+
     # Production
     path('production-per-day/', views.ProductionWork.as_view(), name="production")
->>>>>>> d7e662280d5a1e8f8e03b075cf6286a2cfd745b3
 
 
     # # Order
