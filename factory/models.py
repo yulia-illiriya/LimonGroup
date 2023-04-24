@@ -17,8 +17,6 @@ class Price(models.Model):
 
     def __str__(self) -> str:
         return f'Стоимость {self.value}'
-    
-    
 
     class Meta:
         verbose_name = "Стоимость"
@@ -64,7 +62,7 @@ class Order(models.Model):
 class SewingModel(models.Model):
     
     """Model for sewing"""
-
+    articul = models.CharField(max_length=20, unique=True)
     color = models.CharField(max_length=50, verbose_name='Цвет')
     material = models.CharField(
         max_length=50,
@@ -80,7 +78,7 @@ class SewingModel(models.Model):
                               related_name="sewing_model")
 
     def __str__(self):
-        return f"{self.type} {self.color} {self.material}"
+        return self.articul
 
     class Meta:
         verbose_name = 'Модель'
@@ -98,7 +96,7 @@ class QuantityModel(models.Model):
         verbose_name_plural = "Количество сшитых моделей"
 
     def __str__(self):
-        return f"{self.sewing_model} {str(self.quantity)}"
+        return self.sewing_model
 
 
 class DailyWork(models.Model):
@@ -112,12 +110,17 @@ class DailyWork(models.Model):
     sewing_models = models.ManyToManyField(SewingModel, through='QuantityModel', related_name='daily_works')
     
 
+                                       verbose_name="Зарплата", )
+
     class Meta:
         verbose_name = "Ежедневник"
         verbose_name_plural = "Ежедневники"
+        unique_together = ['employee', 'date']
 
-    def __str__(self):
-        return f"{self.employee} {str(self.date)}"
+
+class QuantityModelDailyWork(models.Model):
+    daily_work = models.ForeignKey(DailyWork, on_delete=models.CASCADE, verbose_name="Ежедневник")
+    quantity = models.ForeignKey(QuantityModel, on_delete=models.CASCADE, verbose_name="Количество сшитых моделей")
 
 
 class NewOrder(models.Model):

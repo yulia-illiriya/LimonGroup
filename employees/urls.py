@@ -8,6 +8,6 @@ router.register(r'position', PositionView)
 
 urlpatterns = [
     path("v1/", include(router.urls)),
-    path("v1/", include(router.urls)),
+
     
 ]
