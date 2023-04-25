@@ -1,6 +1,5 @@
 from decimal import Decimal
-from datetime import datetime, timedelta
-
+from datetime import datetime, timedelta, date
 from django.db import models
 from client.models import Client
 from employees.models import Employee
@@ -89,7 +88,8 @@ class QuantityModel(models.Model):
     sewing_model = models.ForeignKey(SewingModel, on_delete=models.CASCADE, verbose_name="Модель",
                                      related_name="quantity_models")
     quantity = models.PositiveIntegerField(verbose_name="Количество")
-    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True, related_name="numbers_for_account")
+    daily_work = models.ForeignKey('DailyWork', on_delete=models.SET_NULL, null=True,
+                                   related_name="numbers_for_account")
 
     class Meta:
         verbose_name = "Количество сшитой модели"
@@ -108,7 +108,6 @@ class DailyWork(models.Model):
     daily_salary = models.DecimalField(default=Decimal('0.00'), max_digits=7, decimal_places=2,
                                        verbose_name="Итоговая выплата за день с вычетом аванса", )
     sewing_models = models.ManyToManyField(SewingModel, through='QuantityModel', related_name='daily_works')
-    
 
     class Meta:
         verbose_name = "Ежедневник"
@@ -189,7 +188,7 @@ class Storage(models.Model):
         default=0,
         null=True,
         verbose_name='Сумма')
-    data_purchase = models.DateField(verbose_name='Дата закупки')
+    data_purchase = models.DateField(default=date.today, verbose_name='Дата закупки')
     is_ready = models.BooleanField(default=True, verbose_name='Готово')
     remainder = models.CharField(
         max_length=10,
@@ -201,7 +200,7 @@ class Storage(models.Model):
         blank=True,
         null=True,
         verbose_name='Брак')
-    created_at = models.DateTimeField(verbose_name='запись создана')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Запись создана')
     where_was_purchase = models.TextField(
         max_length=100,
         blank=True,

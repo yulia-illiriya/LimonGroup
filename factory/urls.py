@@ -1,10 +1,13 @@
 from django.urls import path, include
 from rest_framework import routers
 from . import views
-from .views import OrderViewSet
+from factory.views import *
 
 router = routers.DefaultRouter()
 router.register(r'order', OrderViewSet)
+router.register(r'storage', StorageViewSet)
+router.register(r'rawstuff', RawStuffViewSet)
+router.register(r'fabriccutting', FabricCuttingViewSet)
 
 urlpatterns = [
 
@@ -63,68 +66,21 @@ urlpatterns = [
         name='price-ret-destroy'),
 
     # Storage
-
-    path(
-        'storage-list-create/',
-        views.StorageListAPIView.as_view(),
-        name='storage-list-create'),
-    path(
-        'storage-update/<int:pk>/',
-        views.StorageRetrieveUpdateAPIView.as_view(),
-        name='storage-ret-update'),
-    path(
-        'storage-destroy/<int:pk>/',
-        views.StorageRetrieveDestroyAPIView.as_view(),
-        name='storage-ret-destroy'),
+    path('factory/storage/', include(router.urls), name='storage'),
 
     # RawStuff
-
-    path(
-        'rawstuff-list-create/',
-        views.RawStuffListCreateAPIView.as_view(),
-        name='rawstuff-list-create'),
-    path(
-        'rawstuff-update/<int:pk>/',
-        views.RawStuffRetrieveUpdateAPIView.as_view(),
-        name='rawstuff-ret-update'),
-    path(
-        'rawstuff-destroy/<int:pk>/',
-        views.RawStuffRetrieveDestroyAPIView.as_view(),
-        name='rawstuff-ret-destroy'),
+    path('factory/rawstuff/', include(router.urls), name='rawstuff'),
 
     # FabricCutting
-
-    path(
-        'fabriccutting-list-create/',
-        views.FabricCuttingListCreateAPIView.as_view(),
-        name='fabriccutting-list-create'),
-    path(
-        'fabriccutting-update/<int:pk>/',
-        views.FabricCuttingRetrieveUpdateAPIView.as_view(),
-        name='fabriccutting-ret-update'),
-    path(
-        'fabriccutting-destroy/<int:pk>/',
-        views.FabricCuttingRetrieveDestroyAPIView.as_view(),
-        name='fabriccutting-ret-destroy'),
+    path('factory/fabriccutting/', include(router.urls), name='fabriccutting'),
 
     #Order
-
-    path('order/', include(router.urls), name='order'),    
-  
-
-    path('order/', include(router.urls), name='order'),
-    
-
-    # Quantity
-   
+    path('factory/order/', include(router.urls), name='order'),
 
     # Production
     path('production-per-day/', views.ProductionWork.as_view(), name="production")
 
-]
-    # # Order
-    # path('order-create/<int:pk>/', OrderCreateUpdateAPIView.as_view(), name='order'),
-    # path('order-create/', OrderListCreateAPIView.as_view(), name='order'),
+] + router.urls
 
 
 
