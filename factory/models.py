@@ -115,11 +115,6 @@ class DailyWork(models.Model):
         unique_together = ['employee', 'date']
 
 
-class QuantityModelDailyWork(models.Model):
-    daily_work = models.ForeignKey(DailyWork, on_delete=models.CASCADE, verbose_name="Ежедневник")
-    quantity = models.ForeignKey(QuantityModel, on_delete=models.CASCADE, verbose_name="Количество сшитых моделей")
-
-
 class NewOrder(models.Model):
     
     """Pattern for new clients"""
@@ -208,7 +203,7 @@ class Storage(models.Model):
         verbose_name='Поставщик')
 
     def __str__(self):
-        return self.product
+        return str(self.product)
 
     class Meta:
         verbose_name = 'Склад-Сырье'
@@ -226,7 +221,7 @@ class FabricCutting(models.Model):
     data_start_end = models.DateField(verbose_name='Дата окончания')
 
     def __str__(self):
-        return self.material
+        return  self.material
 
     class Meta:
         verbose_name = 'Раскрой ткани'
