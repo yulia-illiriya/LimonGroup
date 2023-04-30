@@ -25,7 +25,7 @@ python3 manage.py createsuperuser
 
 SECRET_KEY=NFKDSNFKDSFDSMLK
 ALLOWED_HOSTS=localhost,127.0.0.1
-DATABASE_URL=postgresql://db_username:sb_password@localhost:5432/db_name
+DATABASE_URL=postgresql://db_name:sb_password@localhost:5432/db_username
 DJANGO_SETTINGS_MODLE=config.settings
 DEBUG=True
 
