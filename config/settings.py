@@ -33,8 +33,9 @@ INSTALLED_APPS = [
     # rest
     'rest_framework',
     'rest_framework.authtoken',
-    'drf_yasg',
     'djoser',
+    'drf_yasg',
+
 
     # apps
     'factory',
@@ -53,7 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -169,7 +171,7 @@ SWAGGER_SETTINGS = {
     }
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS: True
 
 CORS_ALLOW_METHODS = (
     "DELETE",

@@ -38,6 +38,7 @@ urlpatterns = [
     # path('api-auth/', include('accounts.urls')),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 urlpatterns += swagger_urls

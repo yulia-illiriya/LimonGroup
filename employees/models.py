@@ -18,7 +18,7 @@ class Position(models.Model):
 class Employee(models.Model):
     full_name = models.CharField("ФИО", max_length=120)
     contacts = models.CharField("Контакты", max_length=200)
-    start_date = models.DateField("Дата начала работы", default=timezone.now().date())
+    start_date = models.DateField("Дата начала работы", auto_now_add=True)  # auto_now_add=True
     position = models.ForeignKey(Position, on_delete=models.CASCADE,
                                  verbose_name="Должность", related_name="employees")
     salary = models.DecimalField("Оклад", max_digits=8, decimal_places=2, default=0)
