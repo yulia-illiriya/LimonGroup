@@ -9,7 +9,7 @@ pip3 install -r requirements.txt
 # Create migrations
 python3 manage.py makemigrations accounts
 python3 manage.py makemigrations employees
-python3 manage.py makemigrations clinets
+python3 manage.py makemigrations client
 python3 manage.py makemigrations factory
 
 python3 manage.py migrate
