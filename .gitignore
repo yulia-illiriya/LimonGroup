@@ -1,6 +1,7 @@
 .idea/
 venv/
 .vscode/
+.DS_Store/
 db_sqlite3
 migrations/
 # Django #
