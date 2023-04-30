@@ -39,7 +39,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api-auth/', include('rest_framework.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += swagger_urls
 
