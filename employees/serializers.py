@@ -17,7 +17,6 @@ class PositionSerializer(serializers.ModelSerializer):
     permission_classes = [IsAdminOrReadOnly, ]
     employees = EmployeeSerializer(many=True, read_only=True)
 
-    # employee = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Position

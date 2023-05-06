@@ -10,7 +10,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'role', 'is_active', 'is_superuser', 'is_staff']
+        fields = ['username', 'email', 'role', 'is_active', 'is_superuser']
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -25,6 +25,7 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
     list_display = ['id', 'username', 'email', 'is_admin']
     search_fields = ()
+    list_filter = ('is_active', 'username',)
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         ("Personal info", {"fields": ("role", "email")}),
@@ -33,9 +34,9 @@ class UserAdmin(BaseUserAdmin):
             {
                 "fields": (
                     "is_active",
-                    "is_staff",
                     "is_admin",
                     "is_superuser",
+                    "is_staff",
                     "groups",
                     "user_permissions",
                 ),
@@ -55,3 +56,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+
+

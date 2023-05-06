@@ -9,8 +9,8 @@ User = get_user_model()
 class UserAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'role', 'email', 'username', 'date_created', 'is_active', 'is_admin', 'is_superuser']
-        read_only_fields = ['id', 'date_created', 'is_active', 'is_admin', 'is_superuser']
+        fields = ['id', 'role', 'email', 'username', 'date_created', 'is_active', 'is_admin', 'is_superuser', 'is_staff']
+        read_only_fields = ['id', 'date_created', 'is_active', 'is_admin', 'is_superuser', 'is_staff']
 
 
 class UserCreateAPISerializer(UserCreateSerializer):
@@ -19,11 +19,3 @@ class UserCreateAPISerializer(UserCreateSerializer):
         fields = ['id', 'role', 'email', 'username', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
-# class UserSerializer(serializers.ModelSerializer):
-#     model = User
-#     fields = "__all__"
-#     # read_only_fields = ('name',)
-#     # extra_kwargs = {
-#     #         'password': {'write_only': True},
-#     #         'name': {'write_only': True},
-#     #         }

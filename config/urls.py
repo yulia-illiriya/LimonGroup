@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from djoser import views
-from .yasg import urlpatterns as swagger_urls
+from .yasg import urlpatterns_yasg as swagger_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
