@@ -1,18 +1,8 @@
 from decimal import Decimal
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField
-from rest_framework.views import APIView
-from rest_framework import serializers
-from rest_framework.response import Response
 from .models import DailyWork, SewingModel, QuantityModel
-
-
-
-class CustomDateField(serializers.DateField):
-    def to_representation(self, value):        
-        return value.strftime('%d.%m.%Y')
-
-
 from django.db.models import Sum
+
 
 def get_production(date):
     daily_works = DailyWork.objects.filter(date=date)
@@ -28,7 +18,6 @@ def get_production(date):
         cost = client_price * quantity['quantity__sum']
         total_cost += cost
 
-        
         sewing_model_name = f"{sewing_model.type} {sewing_model.color} {sewing_model.material}"
         summary.append({
             'sewing_model': sewing_model_name,

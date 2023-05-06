@@ -30,17 +30,6 @@ class UserCreateView(DjoserUserViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# @method_decorator(name='list', decorator=swagger_auto_schema(tags=['users']))
-# @method_decorator(name='retrieve', decorator=swagger_auto_schema(tags=['users']))
-# @method_decorator(name='create', decorator=swagger_auto_schema(tags=['users']))
-# @method_decorator(name='update', decorator=swagger_auto_schema(tags=['users']))
-# @method_decorator(name='destroy', decorator=swagger_auto_schema(tags=['users']))
-# @method_decorator(name='partial_update', decorator=swagger_auto_schema(tags=['users']))
-# class UserViewSet(ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-
-
 class UserMeAPIView(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserAPISerializer

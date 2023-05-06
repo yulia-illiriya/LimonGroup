@@ -17,11 +17,8 @@ from .models import (
     Storage,
     Price,
     QuantityModel,
-    QuantityModelDailyWork, Employee
 )
 from employees.models import Employee
-
-
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -102,6 +99,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
         return order
 
+
 class NewOrderSerializer(serializers.ModelSerializer):
     client_name = serializers.SerializerMethodField()
 
@@ -133,17 +131,6 @@ class QuantityModelSerializer(serializers.ModelSerializer):
         sewing_model = SewingModel.objects.get(pk=sewing_model_id)
         validated_data['sewing_model'] = sewing_model
         return super().create(validated_data)
-
-
-class QuantityModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = QuantityModel
-        fields = ('id',
-                  'sewing_model',
-                  'quantity')
-
-    def create(self, validated_data):
-        return QuantityModel.objects.create(**validated_data)
 
 
 class DailyWorkSerializer(serializers.ModelSerializer):
@@ -199,72 +186,6 @@ class DailyWorkSerializer(serializers.ModelSerializer):
 
         update_daily_salary(instance)  # Вызов функции update_daily_salary после обновления объекта DailyWork
         return instance
-
-      
-    # def to_representation(self, instance):
-    #     ret = super().to_representation(instance)
-    #     ret['daily_salary'] = instance.daily_salary
-    #     return ret    
-
-    
-    quantity = QuantityModelSerializer(many=True, write_only=True)
-    employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
-    daily_salary = serializers.IntegerField(read_only=True)
-
-    class Meta:
-        model = DailyWork
-        fields = (
-            'employee',
-            'date',
-            'prepayment',
-            'daily_salary',
-            'quantity',
-        )
-        depth = 1
-
-    def create(self, validated_data):
-        quantity_data = validated_data.pop('quantity')
-        employee = validated_data.pop('employee')
-        daily_work = DailyWork.objects.create(employee=employee, **validated_data)
-        total = 0
-        for qty_data in quantity_data:
-            sewing_model = qty_data.pop('sewing_model')
-            qty_model = QuantityModel.objects.create(sewing_model=sewing_model, **qty_data)
-            total += sewing_model.labor_cost.value * qty_model.quantity
-            QuantityModelDailyWork.objects.create(daily_work=daily_work, quantity=qty_model)
-        daily_work.daily_salary = total - daily_work.prepayment
-        daily_work.save()
-        return daily_work
-
-
-class EmployeeStringSerializer(serializers.ModelSerializer):
-    position = serializers.StringRelatedField()
-    class Meta:
-        model = Employee
-        fields = ('full_name', 'position')
-
-
-class DailyWorkDetailSerializer(serializers.ModelSerializer):
-    employee = EmployeeStringSerializer()
-
-    class Meta:
-        model = DailyWork
-        fields = (
-            'employee',
-            'date',
-            'prepayment',
-            'daily_salary',
-
-        )
-
-class QuantityModelSerializer(serializers.ModelSerializer):
-    quantity_models = SewingModelSerializer()
-    numbers_for_account = DailyWorkSerializer()
-    
-    class Meta:
-        model = QuantityModel
-        fields = ('id', 'quantity_models', 'quantity', 'numbers_for_account')
-
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):

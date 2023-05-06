@@ -16,7 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('accountant', 'Бухгалтер'),
         ('assistent', 'Ассистент')
     )
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)    
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     email = models.EmailField(
         verbose_name="Email",
         max_length=255,
@@ -27,11 +27,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    # is_staff = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.username
@@ -40,3 +41,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
+    @property
+    def is_staff(self):
+        return self.is_staff

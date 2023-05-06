@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from djoser import views
-from .yasg import urlpatterns as swagger_urls
+from .yasg import urlpatterns_yasg as swagger_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,7 +38,8 @@ urlpatterns = [
     # path('api-auth/', include('accounts.urls')),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-]
+    path('api-auth/', include('rest_framework.urls')),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += swagger_urls
 

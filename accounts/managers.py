@@ -3,36 +3,35 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **kwargs):
+    def create_user(self, email, role, username, password=None):
         if not email:
             raise ValueError("Users must have email address")
-        if not kwargs.get('role'):
+        if not role:
             raise ValueError("Users must have role")
+
         email = self.normalize_email(email)
         user = self.model(
             email=email,
-            username=kwargs.get('username'),
-            role=kwargs.get('role')
+            username=username,
+            role=role
         )
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **kwargs):
-        kwargs.setdefault('is_superuser', True)
-        kwargs.setdefault('is_admin', True)
-        kwargs.setdefault('is_active', True)
-        # kwargs.setdefault('is_staff', True)
-        kwargs.setdefault('role', 'admin')
+    def create_superuser(self, email, username, password=None):
 
-        if not email:
-            raise ValueError("Users must have email address")
-        email = self.normalize_email(email)
-        user = self.model(
+        user = self.create_user(
             email=email,
-            username=kwargs.get('username'),
-            role=kwargs.get('role')
+            password=password,
+            username=username,
+            role='admin'
         )
         user.set_password(password)
+        user.is_admin = True
+        user.is_superuser = True
         user.save()
+
+        print(user.role)
+
         return user

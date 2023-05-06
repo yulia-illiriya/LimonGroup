@@ -28,12 +28,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
 
     # rest
     'rest_framework',
     'rest_framework.authtoken',
-    'drf_yasg',
     'djoser',
+    'drf_yasg',
+
 
     # apps
     'factory',
@@ -46,11 +48,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -112,9 +117,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -129,16 +135,19 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        ),
+    ),
     'DATETIME_FORMAT': '%d.%m.%Y %H:%M:%S',
-    'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
+    'DATE_INPUT_FORMATS': ['%d.%m.%Y', '%Y-%m-%d',
+                           '%d.%m.%Y', '%m/%d/%Y',
+                           '%m/%d/%y', ],
     'DATE_FORMAT': '%d.%m.%Y',
+
 }
 
 AUTH_USER_MODEL = 'accounts.User'
 
 DJOSER = {
-    'USER_MODEL': 'accounts.User',  
+    'USER_MODEL': 'accounts.User',
     'SERIALIZERS': {
         'user': 'accounts.serializers.UserAPISerializer',
         'user_create': 'accounts.serializers.UserCreateAPISerializer',
@@ -146,19 +155,30 @@ DJOSER = {
         'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
         'ACTIVATION_URL': '#/activate/{uid}/{token}',
         'SEND_ACTIVATION_EMAIL': False,
-        
-}
+
+    }
 }
 
 SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-      'Basic': {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
             'type': 'basic'
-      },
-      'Bearer': {
+        },
+        'Bearer': {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
-      }
-   }
+        }
+    }
 }
+
+CORS_ALLOW_ALL_ORIGINS: True
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
