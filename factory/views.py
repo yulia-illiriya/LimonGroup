@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .services import get_production
-
+from accounts.permissions import IsTechnologist, IsAdminPermission
+from employees.permissions import IsAdminOrReadOnly
 from .serializers import (OrderSerializer,
                           SewingModelSerializer,
                           DailyWorkSerializer,
@@ -21,9 +22,9 @@ from .models import (Order, SewingModel, DailyWork,
                      NewOrder, Price, FabricCutting, RawStuff, Storage)
 
 
-class PriceViewSet(viewsets.ModelViewSet):
-    queryset = Price.objects.all()
-    serializer_class = PriceSerializer
+# class PriceViewSet(viewsets.ModelViewSet):
+#     queryset = Price.objects.all()
+#     serializer_class = PriceSerializer
 
 
 class SewingModelViewSet(viewsets.ModelViewSet):
@@ -34,16 +35,20 @@ class SewingModelViewSet(viewsets.ModelViewSet):
 class DailyWorkViewSet(viewsets.ModelViewSet):
     queryset = DailyWork.objects.all()
     serializer_class = DailyWorkSerializer
-
+    http_method_names = ['get', 'post']
+    permission_classes = [IsAdminPermission, IsTechnologist]
 
 class NewOrderViewSet(viewsets.ModelViewSet):
     queryset = NewOrder.objects.all()
     serializer_class = NewOrderSerializer
+    permission_classes = [IsAdminPermission, IsTechnologist]
 
 
 class FabricCuttingViewSet(viewsets.ModelViewSet):
     queryset = FabricCutting.objects.all()
     serializer_class = FabricCuttingSerializer
+    permission_classes = [IsAdminOrReadOnly, ]
+
 
 
 class RawStuffViewSet(viewsets.ModelViewSet):
@@ -54,6 +59,9 @@ class RawStuffViewSet(viewsets.ModelViewSet):
 class StorageViewSet(viewsets.ModelViewSet):
     queryset = Storage.objects.all()
     serializer_class = StorageSerializer
+    http_method_names = ['get', 'post']
+
+
 
 
 class OrderViewSet(viewsets.ModelViewSet):

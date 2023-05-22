@@ -32,7 +32,7 @@ class PriceSerializer(serializers.ModelSerializer):
 class SewingModelSerializer(serializers.ModelSerializer):
     """Позволяет сразу создать или подтянуть из базы данных цену """
 
-    labor_cost = PriceSerializer()
+    cost = PriceSerializer()
     client_price = PriceSerializer()
 
     class Meta:
@@ -55,6 +55,7 @@ class SewingModelSerializer(serializers.ModelSerializer):
         sewing_model = SewingModel.objects.create(**validated_data)
         return sewing_model
 
+        
 
 class SewingModelDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -137,7 +138,7 @@ class DailyWorkSerializer(serializers.ModelSerializer):
     employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
     # daily_salary = serializers.DecimalField(max_digits=7, decimal_places=2)
     sewing_models = QuantityModelSerializer(source='numbers_for_account', many=True)
-
+    
     class Meta:
         model = DailyWork
         fields = ('id', 'employee', 'date', 'prepayment', 'daily_salary', 'sewing_models')
@@ -189,6 +190,9 @@ class DailyWorkSerializer(serializers.ModelSerializer):
 
 
 class FabricCuttingSerializer(serializers.ModelSerializer):
+    sewing_model = SewingModel.objects.all()
+    storage_model = Storage.objects.all()
+    # add method get create
     class Meta:
         model = FabricCutting
         fields = '__all__'
@@ -201,6 +205,8 @@ class RawStuffSerializer(serializers.ModelSerializer):
 
 
 class StorageSerializer(serializers.ModelSerializer):
+    product = RawStuff.objects.all()
+    # add func create update
     class Meta:
         model = Storage
-        fields = '__all__'
+        fields = ["product"]
